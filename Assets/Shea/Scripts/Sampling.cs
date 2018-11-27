@@ -46,20 +46,22 @@ public static class Sampling {
         {
             int cellX = (int)(candidate.x / cellSize);
             int cellY = (int)(candidate.y / cellSize);
-            int searchStartX = Mathf.Max(cellX - 2);
+            int searchStartX = Mathf.Max(0, cellX - 2);
             int searchEndX = Mathf.Min(cellX + 2,grid.GetLength(0)-1);
-            int searchStartY = Mathf.Max(cellY - 2);
+            int searchStartY = Mathf.Max(0, cellY - 2);
             int searchEndY = Mathf.Min(cellY + 2, grid.GetLength(1) - 1);
 
             for(int x = searchStartX; x <= searchEndX; x++)
             {
                 for (int y = searchStartY; y <= searchEndY; y++)
                 {
+                    Debug.Assert(x < grid.GetLength(0) && x > -1, "x was invalid: " + x + "");
+                    Debug.Assert(y < grid.GetLength(1) && y > -1, "y was invalid: " + y);
                     int pointIndex = grid[x, y] - 1;
                     if(pointIndex != -1)
                     {
-                        float dst = (candidate - points[pointIndex]).magnitude;
-                        if(dst<radius)
+                        float dst = (candidate - points[pointIndex]).sqrMagnitude;
+                        if(dst<radius * radius)
                         {
                            return false;
                         }
