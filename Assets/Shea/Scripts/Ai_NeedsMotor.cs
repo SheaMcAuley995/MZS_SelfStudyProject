@@ -5,5 +5,18 @@ using UnityEngine;
 public class Ai_NeedsMotor : MonoBehaviour {
 
     [SerializeField]
-    private Needs needs;
+    public Needs needs;
+
+    private void Start()
+    {
+        needs = new Needs();
+    }
+
+
+    private void Update()
+    {
+        needs.sleep -= Time.deltaTime;
+
+        Debug.Log(needs.sleep.ToString());
+    }
 }
