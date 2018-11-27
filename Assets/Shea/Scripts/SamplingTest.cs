@@ -18,6 +18,7 @@ public class SamplingTest : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(regionSize / 2, regionSize);
         if(points != null)
         {
