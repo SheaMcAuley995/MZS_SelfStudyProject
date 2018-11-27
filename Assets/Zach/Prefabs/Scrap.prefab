@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23876699640052366}
   - component: {fileID: 65450554775552406}
   - component: {fileID: 114312088190175860}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Scrap
   m_TagString: Pickup
   m_Icon: {fileID: 0}

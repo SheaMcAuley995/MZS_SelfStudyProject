@@ -346,6 +346,9 @@ MonoBehaviour:
   turretButton: {fileID: 621485956}
   player: {fileID: 1932677880}
   buildPos: {fileID: 2032961288}
+  buildMask:
+    serializedVersion: 2
+    m_Bits: 6966
   buildDistance: 5
 --- !u!1 &621485954
 GameObject:

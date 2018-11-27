@@ -14,8 +14,11 @@ public class ConstructionManager : MonoBehaviour
     public GameObject transparentTurret, builtTurret;
     public Button turretButton; // ADD SHIP PART BUTTONS FOR BUILDING YOUR SHIP
     public Transform player, buildPos;
+    public LayerMask buildMask;
     [SerializeField] float buildDistance = 5f;
+    [SerializeField] float overlapDistance = 1f;
     GameObject turretBlueprint;
+    Collider[] blockers;
     KeyCode defaultConstButton = KeyCode.Tab;
     bool constPanelOpen, blueprinted;
 
@@ -40,14 +43,37 @@ public class ConstructionManager : MonoBehaviour
 
         if (blueprinted)
         {
+            #region Build Condition
+            bool canBuildHere;
+            blockers = Physics.OverlapSphere(buildPos.transform.position, overlapDistance, buildMask, QueryTriggerInteraction.Collide);
+
+            if (blockers.Length == 0)
+            {
+                canBuildHere = true;
+            }
+            else
+            {
+                canBuildHere = false;
+            }
+            #endregion
+
+            // Cancelling the build
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 DestroyBlueprint();
             }
 
+            // Build the object
             if (Input.GetButtonDown("Fire1"))
             {
-                BuildTurret();
+                if (canBuildHere)
+                {
+                    BuildTurret();
+                }
+                else
+                {
+                    // Do something
+                }
             }
         }
 	}
