@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using UnityEngine;
 
 public class TerrainGen : MonoBehaviour
@@ -10,10 +10,21 @@ public class TerrainGen : MonoBehaviour
     public int depth = 20;
     public float scale = 20;
 
-    void Start()
+    float offsetX = 10000;
+    float offsetY = 10000;
+    public float timer = 2;
+
+    private void Start()
+    {
+        offsetX = Random.Range(1, 100000);
+        offsetY = Random.Range(1, 100000);
+    }
+
+    void Update()
     {
         Terrain terr = GetComponent<Terrain>();
         terr.terrainData = GenerateTerrain(terr.terrainData);
+        offsetX += Time.deltaTime * timer;
     }
 
     private TerrainData GenerateTerrain(TerrainData terrainData)
@@ -39,8 +50,8 @@ public class TerrainGen : MonoBehaviour
 
     private float CalcHeight(int x, int y)
     {
-        float xCoord = (float)x / width * scale;
-        float yCoord = (float)y / height * scale;
+        float xCoord = (float)x / width * scale + offsetX;
+        float yCoord = (float)y / height * scale + offsetY;
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
 }
