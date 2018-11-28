@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
+
+    public Transform seeker;
+    public Transform target;
     Grid grid;
 
     private void Awake()
     {
-        GetComponent<Grid>();
+        grid = GetComponent<Grid>();
+    }
+
+    private void Update()
+    {
+        FindPath(seeker.position, target.position);
     }
 
     void FindPath(Vector3 startPos, Vector3 targetPos)
@@ -22,7 +30,7 @@ public class Pathfinding : MonoBehaviour
         while (openSet.Count > 0)
         {
             Node currentNode = openSet[0];
-            for (int i = 0; i < openSet.Count; i++)
+            for (int i = 1; i < openSet.Count; i++)
             {
                 if(openSet[i].fCost < currentNode.fCost ||
                    openSet[i].fCost == currentNode.fCost &&
@@ -37,7 +45,7 @@ public class Pathfinding : MonoBehaviour
 
             if(currentNode == targetNode)
             {
-                retracePath(startNode, targetNode);
+                RetracePath(startNode, targetNode);
                 return;
             }
 
@@ -64,7 +72,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    void retracePath(Node startNode, Node endNode)
+    void RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
