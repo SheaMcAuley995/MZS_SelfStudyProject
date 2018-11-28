@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Scraps : MonoBehaviour
 {
-    Inventory inventory;
+    //Inventory inventory;
 
     public Collider[] colliders;
     public LayerMask playerMask;
@@ -13,12 +13,12 @@ public class Scraps : MonoBehaviour
     KeyCode defaultInteract1 = KeyCode.E;
     KeyCode defaultInteract2 = KeyCode.Return;
     bool detectingPlayer;
+    Slot slot;
 
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-        inventory = FindObjectOfType<Inventory>();
+        //inventory = FindObjectOfType<Inventory>();
 
         SetDefaultButtons();
     }
@@ -30,13 +30,17 @@ public class Scraps : MonoBehaviour
 
         if (detectingPlayer)
         {
-            if (Input.GetKeyDown(defaultInteract1) || Input.GetKeyDown(defaultInteract2))
+            if (Input.GetKeyDown(interactButtons[0]) || Input.GetKeyDown(interactButtons[1]))
             {
-                inventory.numberOfScraps++;
-                Destroy(gameObject);
-                return;
+                PickUp();
             }
         }
+    }
+
+    void PickUp()
+    {
+        Inventory.instance.numberOfScraps++;
+        Destroy(gameObject);
     }
 
     bool PlayerInRange()

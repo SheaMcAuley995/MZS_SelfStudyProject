@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Pickup
+  - Scrap
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Player
   - Scrap
   - Turret
-  - 
+  - Item
   - 
   - 
   - 

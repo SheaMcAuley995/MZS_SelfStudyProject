@@ -5,10 +5,30 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    #region singleton
+
+    public static Inventory instance;
+
+    private void Awake()
+    {
+        
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
+    #endregion
+
     public GameObject inventoryCanvas;
     [HideInInspector]
     public int numberOfScraps = 0;
     bool openedInventory;
+
 
     void Update()
     {
