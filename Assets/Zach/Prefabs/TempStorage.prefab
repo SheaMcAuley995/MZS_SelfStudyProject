@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 136554739777951878}
   m_Layer: 12
   m_Name: TempStorage
-  m_TagString: Untagged
+  m_TagString: Storage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

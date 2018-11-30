@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : ScriptableObject {
-
+public class Item : ScriptableObject
+{
     public string Name;
-    public Sprite icon;
+    public Texture icon;
 
     public virtual void Equip()
     {

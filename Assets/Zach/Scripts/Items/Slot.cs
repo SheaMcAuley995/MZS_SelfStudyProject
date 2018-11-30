@@ -2,15 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slot : MonoBehaviour {
+public class Slot : MonoBehaviour
+{
+    public GameObject item;
+    public Sprite icon;
+    public bool slotEmpty;
 
-    Sprite icon;
-
-
-    public void addItem(Item item)
+    void Start()
     {
-        gameObject.name = item.name;
-        icon = item.icon;
+        
+    }
 
+    void Update()
+    {
+        if (item)
+        {
+            slotEmpty = false;
+            icon = item.GetComponent<Pickups>().icon;
+            GetComponent<SpriteRenderer>().sprite = icon;
+        }
+        else
+        {
+            slotEmpty = true;
+            icon = null;
+            GetComponent<SpriteRenderer>().sprite = icon;
+        }
     }
 }

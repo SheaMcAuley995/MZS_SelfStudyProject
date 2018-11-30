@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public struct ConstructionData
 {
     [Header("Components and Dependencies")]
+    public Animator animator;
     public Inventory inventory;
     public ThirdPersonCamera cam;
     public Transform player;
@@ -55,7 +56,7 @@ public class ConstructionManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (Input.GetKeyDown(data.constructionButton) && !data.constPanelOpen && !data.blueprinted)
+		if (Input.GetKeyDown(data.constructionButton) && !data.constPanelOpen && !data.blueprinted && !Rocket.instance.inspectingRocket)
         {
             OpenConstructionPanel();
         }
@@ -122,7 +123,8 @@ public class ConstructionManager : MonoBehaviour
     void OpenConstructionPanel()
     {
         data.constPanelOpen = true;
-        data.constructionPanel.SetActive(true);
+        data.animator.SetBool("construction", true);
+        //data.constructionPanel.SetActive(true);
         data.cam.UnlockCursor();
         data.cam.camData.mouseSensitivity = 0f;
 
@@ -157,7 +159,8 @@ public class ConstructionManager : MonoBehaviour
     void CloseConstructionPanel()
     {
         data.constPanelOpen = false;
-        data.constructionPanel.SetActive(false);
+        data.animator.SetBool("construction", false);
+        //data.constructionPanel.SetActive(false);
         data.cam.LockCursor();
         data.cam.camData.mouseSensitivity = 10f;
     }
@@ -232,8 +235,8 @@ public class ConstructionManager : MonoBehaviour
 
         data.buildDistance = 5f;
         data.overlapDistance = 1f;
-        data.costOfTurrets = 1;
-        data.costOfStorage = 5;
+        data.costOfTurrets = 40;
+        data.costOfStorage = 100;
     }
     #endregion
 }

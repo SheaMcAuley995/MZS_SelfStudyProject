@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33074645044303168}
   - component: {fileID: 23876699640052366}
   - component: {fileID: 65450554775552406}
-  - component: {fileID: 114312088190175860}
+  - component: {fileID: 114977188239151226}
   m_Layer: 13
   m_Name: Scrap
   m_TagString: Scrap
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639085665689302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7989371, y: 1, z: 2.5943666}
+  m_LocalPosition: {x: 3.2547317, y: 1, z: 3.9970465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,20 +97,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114312088190175860
+--- !u!114 &114977188239151226
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639085665689302}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01270808f3d63384680ab370047a4e3d, type: 3}
+  m_Script: {fileID: 11500000, guid: aaf9048e5c3675546a675475ee55fe0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliders: []
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  interactButtons: 0000000000000000
-  radius: 1.5
+  icon: {fileID: 21300000, guid: d875d94d0f01a7c40bd3c28ce19a66ad, type: 3}
+  dumpLocation: {fileID: 4211554780155410, guid: cfd3e33af12588a43b207a212a333024,
+    type: 2}

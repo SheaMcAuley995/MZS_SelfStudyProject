@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135931735341929180}
   m_Layer: 12
   m_Name: TempTurret
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
