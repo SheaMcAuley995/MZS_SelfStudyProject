@@ -6,17 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float damage = 20f;
 
-	// Use this for initialization
-	void Start ()
-    {
-        
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -24,6 +14,7 @@ public class Bullet : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("Hitting");
             collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
         }
     }
