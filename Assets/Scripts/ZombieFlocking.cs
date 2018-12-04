@@ -42,7 +42,7 @@ public class ZombieFlocking : MonoBehaviour {
 
            
 
-            Debug.Log(n);
+            //Debug.Log(n);
         }
 
         Vector3 point;
@@ -56,7 +56,7 @@ public class ZombieFlocking : MonoBehaviour {
                 updatePositionTimer = agent.remainingDistance + updateNewPosition_Timer;
                 if(agent.remainingDistance != 0)
                 {
-                    Debug.Log(agent.remainingDistance);
+                    //Debug.Log(agent.remainingDistance);
                 }
                 updateNewPosition = false;
             }

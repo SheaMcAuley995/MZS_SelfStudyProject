@@ -25,19 +25,21 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        //GameObject hitEffect = Instantiate(impactEffect, other.transform.position, Quaternion.identity);
-        Destroy(gameObject);
+    
 
-        if (other.gameObject.CompareTag("Enemy"))
-        {          
-            other.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
-
-            if (other.gameObject.GetComponent<Rigidbody>() != null)
-            {
-               other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(impactForce, transform.position, 5f);              
-            }
-        }     
-    }
+   //void OnCollisionEnter(Collision other)
+   //{
+   //    //GameObject hitEffect = Instantiate(impactEffect, other.transform.position, Quaternion.identity);
+   //    Destroy(gameObject);
+   //
+   //    if (other.gameObject.CompareTag("Enemy"))
+   //    {          
+   //        other.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+   //
+   //        if (other.gameObject.GetComponent<Rigidbody>() != null)
+   //        {
+   //           other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(impactForce, transform.position, 5f);              
+   //        }
+   //    }     
+   //}
 }

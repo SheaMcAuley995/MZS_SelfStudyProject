@@ -26,6 +26,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable<float>
         //HandleUI();
 	}
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
+            TakeDamage(GetComponent<Bullet>().damage);
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         enemy.health -= amount;
