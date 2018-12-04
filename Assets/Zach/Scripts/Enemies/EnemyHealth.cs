@@ -30,7 +30,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable<float>
     {
         if(collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(GetComponent<Bullet>().damage);
+            TakeDamage(collision.gameObject.GetComponent<Bullet>().damage);
         }
     }
 
