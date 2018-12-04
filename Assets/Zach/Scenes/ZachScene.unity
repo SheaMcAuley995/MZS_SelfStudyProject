@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 465684495}
   - component: {fileID: 465684494}
   - component: {fileID: 465684499}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Cube
   m_TagString: Enemy
   m_Icon: {fileID: 0}
