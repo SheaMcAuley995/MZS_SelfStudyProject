@@ -4,32 +4,47 @@ using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    public GameObject firePoint;
-    public GameObject impactEffect;
+    #region singleton
+
+    public static PlayerGun instance;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
+    #endregion
+
+    [Header("Firing GameObjects")]
+    public GameObject firePoint;   
     public GameObject projectile;
     public GameObject projectileParent;
-
-    public float speed = 5f;
-    public float range = 15f;
+   
+    [Header("Reloading Parameters")]
     public float reloadTime = 3f;
     bool isReloading;
-    float nextTimeToFire = 0f;
 
-    public float fireRate = 15f;
-    public float impactForce = 20f;
-    int ammo;
+    [Header("Ammunition")]
     public int maxAmmo = 10;
+    int ammo;
 
 
     void Start()
     {
-        ammo = maxAmmo;
+        RefillAmmo();
     }
 
     // Update is called once per frame
     void Update ()
     {
-		if (Input.GetButton("Fire1") && ammo != 0)
+		if (Input.GetButtonDown("Fire1") && !isReloading)
         {
             Shoot();
         }
@@ -37,8 +52,26 @@ public class PlayerGun : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(projectile, firePoint.transform.position, Quaternion.identity, projectileParent.transform);
-        bullet.GetComponent<Rigidbody>().AddForce(firePoint.transform.forward * speed, ForceMode.Impulse);
-        Destroy(bullet, 3f);
+        GameObject bullet = Instantiate(projectile, firePoint.transform.position, Quaternion.LookRotation(firePoint.transform.forward, firePoint.transform.up), projectileParent.transform);
+        ammo--;
+
+        if (ammo <= 0)
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadTime);
+        RefillAmmo();      
+        yield break;
+    }
+
+    void RefillAmmo()
+    {
+        ammo = maxAmmo;
+        isReloading = false;
     }
 }

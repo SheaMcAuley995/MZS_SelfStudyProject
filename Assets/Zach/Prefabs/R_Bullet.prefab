@@ -99,7 +99,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!64 &64056654072310192
 MeshCollider:
@@ -126,4 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1256c5172c2b27d4da6db899c17fd893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 100
   damage: 20
+  impactForce: 10
+  impactEffect: {fileID: 0}
