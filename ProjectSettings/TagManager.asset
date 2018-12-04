@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Pickup
+  - Scrap
+  - Rocket
+  - Turret
+  - Storage
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,9 +24,9 @@ TagManager:
   - Unwalkable
   - Player
   - Scrap
-  - Turret
-  - 
-  - 
+  - Building
+  - Pickup
+  - Item
   - 
   - 
   - 

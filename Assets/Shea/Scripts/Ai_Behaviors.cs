@@ -62,6 +62,7 @@ public class Ai_Behaviors : MonoBehaviour {
 
     public void Behavior_Carnivore()
     {
+
         Debug.Log("I eat meat");
     }
     public void Behavior_Herbivore()
