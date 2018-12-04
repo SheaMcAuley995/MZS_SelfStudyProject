@@ -1266,21 +1266,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 223188250713657556, guid: 28a91ce8c06e1864cae2f0d0d29dee17,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1857302865}
-    - target: {fileID: 114361477656860930, guid: 28a91ce8c06e1864cae2f0d0d29dee17,
-        type: 2}
-      propertyPath: projectileParent
-      value: 
-      objectReference: {fileID: 1846394804}
     - target: {fileID: 114032382270807402, guid: 28a91ce8c06e1864cae2f0d0d29dee17,
         type: 2}
       propertyPath: numOfScrapsText
       value: 
       objectReference: {fileID: 2137963056}
+    - target: {fileID: 114361477656860930, guid: 28a91ce8c06e1864cae2f0d0d29dee17,
+        type: 2}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 1846394804}
+    - target: {fileID: 223188250713657556, guid: 28a91ce8c06e1864cae2f0d0d29dee17,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1857302865}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28a91ce8c06e1864cae2f0d0d29dee17, type: 2}
   m_IsPrefabAsset: 0
