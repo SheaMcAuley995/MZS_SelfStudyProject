@@ -15,6 +15,8 @@ public class ItemSpawner : MonoBehaviour
     [Tooltip("Don't touch this, it's just visible here so that I can see how many there are in any particular session")]
     [SerializeField] int totalScraps;
     [SerializeField] int totalEnemies;
+    [SerializeField] [Range(0, 100)] int randomItems;
+    [SerializeField] [Range(0, 100)] int randomEnemies;
 
     // Use this for initialization
     void Start()
@@ -136,7 +138,7 @@ public class ItemSpawner : MonoBehaviour
 
     void SetChancesForItems()
     {
-        totalScraps = Random.Range(20, 25); // These values will need to go way up for the actual level, I just can't fit them all on my platform
-        totalEnemies = Random.Range(5, 10);
+        totalScraps = randomItems;
+        totalEnemies = randomEnemies;
     }
 }

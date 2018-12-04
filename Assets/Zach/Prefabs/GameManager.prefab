@@ -195,3 +195,5 @@ MonoBehaviour:
     m_Bits: 4294967295
   totalScraps: 0
   totalEnemies: 0
+  randomItems: 20
+  randomEnemies: 5

@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float speed = 100f;
     public float damage = 20f;
     public float impactForce = 50f;
+    bool isOnTurret;
 
     [Header("Effects")]
     public GameObject impactEffect;
@@ -16,30 +17,25 @@ public class Bullet : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        BulletBehavior();
+
+        if (!isOnTurret)
+        {
+            GunBulletBehavior();
+        }
+        else
+        {
+            TurretBulletBehavior();
+        }
     }
 
-    void BulletBehavior()
+    void GunBulletBehavior()
     {
         rb.AddForce(PlayerGun.instance.firePoint.transform.forward * speed, ForceMode.Impulse);
         Destroy(gameObject, 3f);
     }
 
-    
-
-   //void OnCollisionEnter(Collision other)
-   //{
-   //    //GameObject hitEffect = Instantiate(impactEffect, other.transform.position, Quaternion.identity);
-   //    Destroy(gameObject);
-   //
-   //    if (other.gameObject.CompareTag("Enemy"))
-   //    {          
-   //        other.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
-   //
-   //        if (other.gameObject.GetComponent<Rigidbody>() != null)
-   //        {
-   //           other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(impactForce, transform.position, 5f);              
-   //        }
-   //    }     
-   //}
+    void TurretBulletBehavior()
+    {
+        Destroy(gameObject, 3f);
+    }
 }
