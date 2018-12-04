@@ -6,6 +6,7 @@ public class Turret : MonoBehaviour
 {
     [SerializeField]
     private Collider[] targets;
+    private Collider curTarget;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -35,26 +36,57 @@ public class Turret : MonoBehaviour
         Collider[] enemies = Physics.OverlapSphere(transform.position, attackDistance, mask, QueryTriggerInteraction.Ignore);
         targets = enemies;
         timer -= Time.deltaTime;
-       
-        if (!cm.data.blueprinted)
+        if(enemies.Length > 0)
         {
             foreach (var target in enemies)
             {
-                Debug.DrawLine(transform.position, target.transform.position, Color.red);
-                if (Vector3.Distance(transform.position, target.transform.position) < attackDistance)
+                if (curTarget == null)
                 {
-                    transform.LookAt(target.transform);
-                    barrelForward = barrelTip.transform.forward;
-                    if (timer <= 0f)
+                    curTarget = target;
+                }
+                else
+                {
+                    if(Vector3.Distance(transform.position, target.transform.position) < (Vector3.Distance(transform.position, curTarget.transform.position)))
                     {
-                        
-                        FireTurret();
-                        timer = speed;
+                        curTarget = target;
                     }
-
                 }
             }
-        }       
+            transform.LookAt(curTarget.transform);
+            barrelForward = barrelTip.transform.forward;
+             if (timer <= 0f)
+             {
+                 
+                 FireTurret();
+                 timer = speed;
+             }
+
+
+        }
+        else
+        {
+            curTarget = null;
+        }
+       
+       //if (!cm.data.blueprinted)
+       //{
+       //    foreach (var target in enemies)
+       //    {
+       //        Debug.DrawLine(transform.position, target.transform.position, Color.red);
+       //        if (Vector3.Distance(transform.position, target.transform.position) < attackDistance)
+       //        {
+       //            transform.LookAt(target.transform);
+       //            barrelForward = barrelTip.transform.forward;
+       //            if (timer <= 0f)
+       //            {
+       //                
+       //                FireTurret();
+       //                timer = speed;
+       //            }
+       //
+       //        }
+       //    }
+       //}       
     
     }
     void FireTurret()
