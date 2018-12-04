@@ -31,17 +31,13 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
 
         if (other.gameObject.CompareTag("Enemy"))
-        {
-            
-            collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
-        }
+        {          
             other.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
 
             if (other.gameObject.GetComponent<Rigidbody>() != null)
             {
-                other.gameObject.GetComponent<Rigidbody>().AddForce(-other.transform.forward * impactForce, ForceMode.Impulse);
+               other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(impactForce, transform.position, 5f);              
             }
-        }       
-
+        }     
     }
 }

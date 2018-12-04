@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
     List<GameObject> itemList = new List<GameObject>();
-    public GameObject scrap, scrapsParent;
+    public GameObject scrap, enemy, scrapsParent, enemyParent;
 
     public Vector3 center, size;
     float radius;
@@ -14,6 +14,7 @@ public class ItemSpawner : MonoBehaviour
 
     [Tooltip("Don't touch this, it's just visible here so that I can see how many there are in any particular session")]
     [SerializeField] int totalScraps;
+    [SerializeField] int totalEnemies;
 
     // Use this for initialization
     void Start()
@@ -28,6 +29,11 @@ public class ItemSpawner : MonoBehaviour
         for (int scrapsNumber = 0; scrapsNumber < totalScraps; scrapsNumber++)
         {
             SpawnScraps();
+        }
+
+        for (int enemyNumber = 0; enemyNumber < totalEnemies; enemyNumber++)
+        {
+            SpawnEnemies();
         }
         #endregion       
     }
@@ -58,7 +64,34 @@ public class ItemSpawner : MonoBehaviour
             }
         }
 
-        GameObject BoosterInjection = Instantiate(itemList[0], spawnPos, Quaternion.identity, scrapsParent.transform);
+        GameObject NewItem = Instantiate(itemList[0], spawnPos, Quaternion.identity, scrapsParent.transform);
+    }
+
+    void SpawnEnemies()
+    {
+        Vector3 spawnPos = new Vector3(0f, 0f, 0f);
+        bool canSpawnHere = false;
+        int safetyNet = 0;
+
+        while (!canSpawnHere)
+        {
+            spawnPos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+            canSpawnHere = PreventSpawnOverlap(spawnPos);
+
+            if (canSpawnHere)
+            {
+                break;
+            }
+
+            safetyNet++;
+
+            if (safetyNet > 50)
+            {
+                break;
+            }
+        }
+
+        GameObject Zombie = Instantiate(itemList[1], spawnPos, Quaternion.identity, enemyParent.transform);
     }
     #endregion
 
@@ -98,6 +131,7 @@ public class ItemSpawner : MonoBehaviour
     void AddPrefabsToList()
     {
         itemList.Add(scrap);
+        itemList.Add(enemy);
     }
 
     void SetChancesForItems()
