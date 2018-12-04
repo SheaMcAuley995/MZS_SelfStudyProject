@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public float speed = 100f;
     public float damage = 20f;
     public float impactForce = 50f;
-    bool isOnTurret;
+    public bool isOnTurret;
 
     [Header("Effects")]
     public GameObject impactEffect;
