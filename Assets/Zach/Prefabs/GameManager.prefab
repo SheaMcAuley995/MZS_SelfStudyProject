@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrap: {fileID: 1639085665689302, guid: 75f06cf2a4fb8044486ed92fe6fe3f24, type: 2}
-  enemy: {fileID: 0}
+  enemy: {fileID: 1649434481844834, guid: 66177bc65566e604c8ac4f1632b965cb, type: 2}
   scrapsParent: {fileID: 1356060247827456}
   enemyParent: {fileID: 1328498181256694}
   center: {x: 0, y: 1, z: 0}

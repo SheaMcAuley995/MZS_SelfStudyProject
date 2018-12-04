@@ -137,5 +137,6 @@ public class ItemSpawner : MonoBehaviour
     void SetChancesForItems()
     {
         totalScraps = Random.Range(20, 25); // These values will need to go way up for the actual level, I just can't fit them all on my platform
+        totalEnemies = Random.Range(5, 10);
     }
 }
