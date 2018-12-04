@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ZombieFlocking : MonoBehaviour {
-    
+
+    [SerializeField] Animator anim;
+
     [SerializeField] float searchRadius;
     [SerializeField] LayerMask searchForLayer;
     
@@ -25,6 +27,7 @@ public class ZombieFlocking : MonoBehaviour {
 
     private void Update()
     {
+
         Collider[] hitObjects = Physics.OverlapSphere(transform.position, searchRadius, searchForLayer, QueryTriggerInteraction.Ignore);
         agent.speed = 1.5f;
         foreach (Collider n in hitObjects)
@@ -70,6 +73,8 @@ public class ZombieFlocking : MonoBehaviour {
         {
             updateNewPosition = true;
         }
+        float speedPercent = agent.velocity.magnitude / agent.speed;
+        anim.SetFloat("speedPercent", speedPercent, .1f,Time.deltaTime); 
         
     }
 
