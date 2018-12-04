@@ -3300,15 +3300,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1663791942299330}
-  impactEffect: {fileID: 0}
   projectile: {fileID: 1387488765456606, guid: f9b95eddd65ef684194440daa7eb7539, type: 2}
   projectileParent: {fileID: 0}
-  speed: 50
-  range: 15
   reloadTime: 3
-  damage: 20
-  fireRate: 15
-  impactForce: 20
   maxAmmo: 10
 --- !u!114 &114363320580347230
 MonoBehaviour:
