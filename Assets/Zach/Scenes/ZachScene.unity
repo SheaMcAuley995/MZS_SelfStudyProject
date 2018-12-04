@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.87070066, g: 0.69994754, b: 0.69232124, a: 1}
+  m_IndirectSpecularColor: {r: 0.47630465, g: 0.38301677, b: 0.378799, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy:
     health: 100
-    startHealth: 100
+    startHealth: 1000000
 --- !u!65 &465684495
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -778,11 +778,6 @@ Prefab:
       propertyPath: data.buildingButtons.Array.data[1]
       value: 
       objectReference: {fileID: 97036605}
-    - target: {fileID: 114016632919059168, guid: 08ca0beeedf96db4cafc3d05265e2aca,
-        type: 2}
-      propertyPath: data.buildMask.m_Bits
-      value: 31542
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08ca0beeedf96db4cafc3d05265e2aca, type: 2}
   m_IsPrefabAsset: 0
