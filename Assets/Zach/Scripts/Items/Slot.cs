@@ -17,15 +17,25 @@ public class Slot : MonoBehaviour
     {
         if (item)
         {
-            slotEmpty = false;
-            icon = item.GetComponent<Pickups>().icon;
-            GetComponent<SpriteRenderer>().sprite = icon;
+            FillSlot();
         }
         else
         {
-            slotEmpty = true;
-            icon = null;
-            GetComponent<SpriteRenderer>().sprite = icon;
+            RemoveSlot();
         }
+    }
+
+    void FillSlot()
+    {
+        slotEmpty = false;
+        icon = item.GetComponent<Pickups>().icon;
+        GetComponent<SpriteRenderer>().sprite = icon;
+    }
+
+    void RemoveSlot()
+    {
+        slotEmpty = true;
+        icon = null;
+        GetComponent<SpriteRenderer>().sprite = icon;
     }
 }

@@ -118,15 +118,19 @@ public class Rocket : MonoBehaviour
             // If the player is trying to remove scraps and there are no scraps to remove...
             if (amountToContribute < 0 && scrapsContributed <= 0)
             {
-                return; // Exit out of the function
+                return;
             }
 
+            // If player is removing scraps from the rocket...
             if (amountToContribute < 0)
             {
+                // Add scrap to inventory
                 Inventory.instance.AddItem(itemToPickUp);
             }
+            // If player is adding scraps to the rocket...
             else if (amountToContribute > 0)
             {
+                // Remove scrap from inventory
                 Inventory.instance.RemoveItem(itemToPickUp);
             }
 

@@ -5,15 +5,21 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     ConstructionManager construction;
-    public LayerMask objectMask;
-    public KeyCode[] interactButtons;
+
+    [Header("Inspector Requirements")]
     public Transform playerTransform;
-    public GameObject itemPickedUp;
+    public LayerMask objectMask;
+
+    [Header("Interaction Parameters")]
+    public KeyCode[] interactButtons;
     [SerializeField] float distance = 5f;
+    public GameObject itemPickedUp;
     KeyCode defaultInteract1 = KeyCode.E;
     KeyCode defaultInteract2 = KeyCode.Return;
     bool detectingObject;
     GameObject objectType;
+
+    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 
 
 	// Use this for initialization
@@ -28,6 +34,7 @@ public class Interact : MonoBehaviour
     {
         detectingObject = CheckForDetection(); // Sets the detection bool to the results of the check for detection method
 
+        // If input buttons are pressed for player to interact with an object...
         if (Input.GetKeyDown(interactButtons[0]) || Input.GetKeyDown(interactButtons[1]))
         {            
             if (detectingObject)
@@ -37,6 +44,7 @@ public class Interact : MonoBehaviour
         }
 	}
 
+    #region Inventory
     // For picking up non-interactable objects
     void OnTriggerEnter(Collider other)
     {
@@ -44,6 +52,7 @@ public class Interact : MonoBehaviour
         {
             if (!Inventory.instance.inventoryIsFull)
             {
+                itemPickedUp = other.gameObject;
                 other.gameObject.GetComponent<Pickups>().PickupObject();
                 Inventory.instance.AddItem(itemPickedUp);
             }
@@ -60,10 +69,14 @@ public class Interact : MonoBehaviour
             Inventory.instance.itemAdded = false;
         }
     }
+    #endregion
 
+    #region Detection
     // Detects objects in range with a raycast, returns true if it detects something that's not a pickup
     bool CheckForDetection()
     {
+        sw.Start();
+
         RaycastHit hit;
         detectingObject = Physics.Raycast(playerTransform.position, playerTransform.transform.forward, out hit, distance, objectMask, QueryTriggerInteraction.Collide);
 
@@ -79,7 +92,9 @@ public class Interact : MonoBehaviour
             return false;
         }
     }
+    #endregion
 
+    #region Interaction
     // Player inteacts with the given object, actions depending on which object it is
     void InteractWithObject()
     {
@@ -120,6 +135,7 @@ public class Interact : MonoBehaviour
             // Open storage inventory UI
         }
     }
+    #endregion
 
     // Sets the default interact buttons if none are given in the inspector -- DEV TOOL, REMOVE WHEN LAUNCHING!!
     void SetDefaultButtons()

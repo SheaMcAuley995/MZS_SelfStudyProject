@@ -39,12 +39,12 @@ public struct ConstructionData
     public float overlapDistance;
     public int costOfTurrets;
     public int costOfStorage;
-
 }
 
 public class ConstructionManager : MonoBehaviour
 {
     public ConstructionData data;
+    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 
 	// Use this for initialization
 	void Start ()
