@@ -26,6 +26,9 @@ public class PlayerGun : MonoBehaviour
     public GameObject firePoint;   
     public GameObject projectile;
     public GameObject projectileParent;
+
+    [Header("Components")]
+    public AudioSource gunShot;
    
     [Header("Reloading Parameters")]
     public float reloadTime = 3f;
@@ -59,6 +62,8 @@ public class PlayerGun : MonoBehaviour
         {
             StartCoroutine(Reload());
         }
+
+        gunShot.Play();
     }
 
     IEnumerator Reload()

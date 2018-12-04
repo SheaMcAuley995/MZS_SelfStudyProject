@@ -393,12 +393,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c73f8840f0f429419a02e0b26a86ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targets: []
   speed: 0.02
   turningRate: 2
   projectile: {fileID: 1796328099929140, guid: 62cd4ad3c174f2244b7e61bb0752d71e, type: 2}
   barrelTip: {fileID: 1347132726252312}
   attackDistance: 200
+  mask:
+    serializedVersion: 2
+    m_Bits: 16
   AttackSound: {fileID: 82751539158348674}
 --- !u!135 &135897986838071332
 SphereCollider:
