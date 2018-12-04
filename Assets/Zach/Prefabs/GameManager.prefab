@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1080584436432260}
+  m_IsPrefabAsset: 1
+--- !u!1 &1080584436432260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4420608881039324}
+  - component: {fileID: 114016632919059168}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1356060247827456
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4101182129959054}
+  m_Layer: 0
+  m_Name: RocketParts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1993306740085146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4217249343937172}
+  - component: {fileID: 114594798350623288}
+  m_Layer: 0
+  m_Name: ObjectSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4101182129959054
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356060247827456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.904415, y: 13.825331, z: -17.072243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4217249343937172}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4217249343937172
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1993306740085146}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.071525, y: 2.3421037, z: -12.374009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4101182129959054}
+  m_Father: {fileID: 4420608881039324}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4420608881039324
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1080584436432260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.071525, y: -2.3421037, z: 12.374009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4217249343937172}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114016632919059168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1080584436432260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9681270e4d320e14a84b2df272cb41c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    animator: {fileID: 0}
+    inventory: {fileID: 0}
+    cam: {fileID: 0}
+    player: {fileID: 0}
+    buildPos: {fileID: 0}
+    blockers: []
+    buildMask:
+      serializedVersion: 2
+      m_Bits: 15158
+    blueprinted: 0
+    constPanelOpen: 0
+    constructionButton: 0
+    defaultConstButton: 0
+    transparentBuilding:
+    - {fileID: 1828137884656616, guid: d19aa11357cfa4347b59dc3608753279, type: 2}
+    - {fileID: 1339892487677468, guid: facb8b2c59370014184e9c3eb8668487, type: 2}
+    builtBuilding:
+    - {fileID: 1937864704559822, guid: b65b3a7cf39432a4690d6268710bf82f, type: 2}
+    - {fileID: 1371234667800916, guid: f99a2cbf7f6f13c46b96c7e9fd3f245d, type: 2}
+    buildingBlueprint: {fileID: 0}
+    buildingNum: 0
+    constructionPanel: {fileID: 0}
+    notEnoughScraps:
+    - {fileID: 0}
+    - {fileID: 0}
+    buildingButtons:
+    - {fileID: 0}
+    - {fileID: 0}
+    buildDistance: 0
+    overlapDistance: 0
+    costOfTurrets: 0
+    costOfStorage: 0
+--- !u!114 &114594798350623288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1993306740085146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0d4c0b55bba75449a814c6ae36cf91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrap: {fileID: 1639085665689302, guid: 75f06cf2a4fb8044486ed92fe6fe3f24, type: 2}
+  scrapsParent: {fileID: 1356060247827456}
+  center: {x: 0, y: 1, z: 0}
+  size: {x: 45, y: 0, z: 45}
+  colliders: []
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  totalScraps: 0
