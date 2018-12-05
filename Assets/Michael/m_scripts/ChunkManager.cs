@@ -18,8 +18,9 @@ public class ChunkManager : MonoBehaviour {
     Vector2 playerPosOld;
     int chunkSize;
     int visibleChunks;
-    Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
+    public Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
     static List<TerrainChunk> terrainVisibleLastUpdate = new List<TerrainChunk>();
+
     private void Start()
     {
         mapGen = FindObjectOfType<MapGen>();
@@ -68,6 +69,7 @@ public class ChunkManager : MonoBehaviour {
     public class TerrainChunk
     {
         GameObject meshObj;
+        SpawnPointsOnMesh spawnPoints;
         Vector2 pos;
         Bounds bounds;
         MapData mapData;

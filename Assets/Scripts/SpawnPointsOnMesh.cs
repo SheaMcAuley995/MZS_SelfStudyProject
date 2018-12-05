@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class SpawnPointsOnMesh : MonoBehaviour {
 
-    [SerializeField] float spawnPointHieght;
+    [SerializeField] float spawnPointHieght = 0;
     [SerializeField] [Range(1, 100)] int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
     [HideInInspector]public MeshFilter filter;
 
+    ChunkManager.TerrainChunk[] terrainChunks;
+
     [Space]
     [SerializeField] GameObject enemyToBeSpawned;
     [SerializeField] int numberOfEnemiesToBeSpawned = 1;
+
+    public SpawnPointsOnMesh(float _spawnPointHieght, int _dstBetweenPoints, MeshFilter _filter, GameObject _enemyToBeSpawned,int _numOfEnemies)
+    {
+        spawnPointHieght = _spawnPointHieght;
+        dstBetweenPoints = _dstBetweenPoints;
+        filter = _filter;
+        enemyToBeSpawned = _enemyToBeSpawned;
+        numberOfEnemiesToBeSpawned = _numOfEnemies;
+    }
 
 
     private void Start()
@@ -19,6 +30,8 @@ public class SpawnPointsOnMesh : MonoBehaviour {
         filter = GetComponent<MeshFilter>();
         spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
         Initialize();
+      //  terrainChunks = FindObjectsOfType<ChunkManager.TerrainChunk>();
+        
     }
 
     public void spawnNodesOnMesh(Mesh mesh)
@@ -36,6 +49,11 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     {
         spawnNodesOnMesh(filter.mesh);
         spawnEnemies(enemyToBeSpawned, numberOfEnemiesToBeSpawned);
+    }
+
+    public void findChunks()
+    {
+       
     }
 
     public void spawnEnemies(GameObject enemy, int enemiesToBeSpawned)
