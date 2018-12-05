@@ -9,8 +9,6 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     public SpawnPointNode[] spawnGrid;
     [HideInInspector]public MeshFilter filter;
 
-    
-
     [Space]
     public GameObject enemyToBeSpawned;
     public int numberOfEnemiesToBeSpawned = 1;
@@ -27,19 +25,22 @@ public class SpawnPointsOnMesh : MonoBehaviour {
 
     private void Start()
     {  
-        filter = GetComponent<MeshFilter>();
-        spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
+        //filter = GetComponent<MeshFilter>();
+        //spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
 
-        var terrainChunks = GetComponents<ChunkManager.TerrainChunk>();
+        var terrainChunks = GetComponentsInChildren<GameObject>();
 
-        foreach(ChunkManager.TerrainChunk n in terrainChunks)
+        foreach(GameObject n in terrainChunks)
         {
-            SpawnPointsOnMesh newSpawnMesh = n.meshObj.AddComponent<SpawnPointsOnMesh>();
+            Debug.Log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+            SpawnPointsOnMesh newSpawnMesh = n.AddComponent<SpawnPointsOnMesh>();
+            filter = n.GetComponent<MeshFilter>();
             newSpawnMesh.spawnPointHieght = spawnPointHieght;
             newSpawnMesh.dstBetweenPoints = dstBetweenPoints;
             newSpawnMesh.enemyToBeSpawned = enemyToBeSpawned;
             newSpawnMesh.numberOfEnemiesToBeSpawned = numberOfEnemiesToBeSpawned;
-            newSpawnMesh.spawnNodesOnMesh(n.meshObj.GetComponent<MeshFilter>().mesh);
+            newSpawnMesh.spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
+            newSpawnMesh.spawnNodesOnMesh(n.GetComponent<MeshFilter>().mesh);
             newSpawnMesh.spawnEnemies(newSpawnMesh.enemyToBeSpawned, newSpawnMesh.numberOfEnemiesToBeSpawned);
         }
     }
