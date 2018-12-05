@@ -56,7 +56,7 @@ public class ZombieFlocking : MonoBehaviour {
                 updatePositionTimer = agent.remainingDistance + updateNewPosition_Timer;
                 if(agent.remainingDistance != 0)
                 {
-                    //Debug.Log(agent.remainingDistance);
+
                 }
                 updateNewPosition = false;
             }
