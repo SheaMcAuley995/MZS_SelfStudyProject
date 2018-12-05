@@ -70,11 +70,11 @@ public class Inventory : MonoBehaviour
                 
                 if (slotsUsed >= allBagSlots)
                 {
-                    inventoryIsFull = true;
+                    //inventoryIsFull = true;
                 }
                 else
                 {
-                    inventoryIsFull = false;
+                    //inventoryIsFull = false;
                 }
             }
         }
@@ -93,11 +93,11 @@ public class Inventory : MonoBehaviour
 
                 if (slotsUsed >= allBagSlots)
                 {
-                    inventoryIsFull = true;
+                    //inventoryIsFull = true;
                 }
                 else
                 {
-                    inventoryIsFull = false;
+                    //inventoryIsFull = false;
                 }
             }
         }

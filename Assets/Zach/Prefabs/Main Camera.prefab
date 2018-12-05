@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1060695452571296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.58, y: 2.31, z: -1.25}
+  m_LocalPosition: {x: 0.58, y: 1.81, z: -1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,9 +104,12 @@ MonoBehaviour:
     mouseSensitivity: 0
     distFromTarget: 0
     pitchMinMax: {x: 0, y: 0}
+    yawMinMax: {x: 0, y: 0}
     rotationSmoothTime: 0
     rotationSmoothVelocity: {x: 0, y: 0, z: 0}
     currentRotation: {x: 0, y: 0, z: 0}
     yaw: 0
     pitch: 0
+  thirdPersonCamera: {fileID: 1060695452571296}
+  firstPersonCamera: {fileID: 0}
   target: {fileID: 0}

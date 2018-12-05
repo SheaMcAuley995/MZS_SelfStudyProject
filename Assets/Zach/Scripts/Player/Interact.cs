@@ -19,8 +19,6 @@ public class Interact : MonoBehaviour
     bool detectingObject;
     GameObject objectType;
 
-    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
 
 	// Use this for initialization
 	void Start ()
@@ -75,8 +73,6 @@ public class Interact : MonoBehaviour
     // Detects objects in range with a raycast, returns true if it detects something that's not a pickup
     bool CheckForDetection()
     {
-        sw.Start();
-
         RaycastHit hit;
         detectingObject = Physics.Raycast(playerTransform.position, playerTransform.transform.forward, out hit, distance, objectMask, QueryTriggerInteraction.Collide);
 
@@ -133,6 +129,10 @@ public class Interact : MonoBehaviour
         else if (objectType.CompareTag("Storage"))
         {
             // Open storage inventory UI
+        }
+        else if (objectType.CompareTag("Factory"))
+        {
+            // Open factory UI
         }
     }
     #endregion
