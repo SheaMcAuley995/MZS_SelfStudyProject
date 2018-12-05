@@ -30,6 +30,7 @@ public class PlayerGun : MonoBehaviour
 
     [Header("Components")]
     public AudioSource gunShot;
+    ConstructionManager construction;
    
     [Header("Reloading Parameters")]
     public float reloadTime = 3f;
@@ -43,13 +44,13 @@ public class PlayerGun : MonoBehaviour
     void Start()
     {
         RefillAmmo();
-        
+        construction = FindObjectOfType<ConstructionManager>();
     }
 
     // Update is called once per frame
     void Update ()
     {
-		if (Input.GetButtonDown("Fire1") && !isReloading)
+		if (Input.GetButtonDown("Fire1") && !isReloading && !construction.data.blueprinted && !construction.data.constPanelOpen && !Rocket.instance.inspectingRocket)
         {
             Shoot();
         }

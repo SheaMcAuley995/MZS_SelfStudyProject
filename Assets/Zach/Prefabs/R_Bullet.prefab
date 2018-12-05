@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  damage: 20
+  damage: 25
   impactForce: 10
+  isOnTurret: 0
   impactEffect: {fileID: 0}

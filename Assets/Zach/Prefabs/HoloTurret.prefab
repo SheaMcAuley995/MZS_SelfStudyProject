@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147818162448732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.76084304, y: 1, z: -7.1817784}
+  m_LocalPosition: {x: -5.1972265, y: 1, z: -0.97926617}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4875838158906856}
@@ -270,7 +270,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1354278592334020}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -282,7 +282,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147818162448732}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -393,12 +393,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c73f8840f0f429419a02e0b26a86ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targets: []
   speed: 0.02
   turningRate: 2
   projectile: {fileID: 1796328099929140, guid: 62cd4ad3c174f2244b7e61bb0752d71e, type: 2}
   barrelTip: {fileID: 1879498774356504}
   attackDistance: 200
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
   AttackSound: {fileID: 82209810406870876}
 --- !u!135 &135434375100457298
 SphereCollider:
@@ -407,7 +410,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1554525298282418}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
