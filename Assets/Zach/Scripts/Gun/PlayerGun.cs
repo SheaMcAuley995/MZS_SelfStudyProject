@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PlayerGun : MonoBehaviour
 {
@@ -29,9 +28,16 @@ public class PlayerGun : MonoBehaviour
     public GameObject projectileParent;
 
     [Header("Components")]
-    public AudioSource gunShot;
+    public AudioSource gunShot;   
     ConstructionManager construction;
-   
+
+    [Header("Aiming Components")]
+    public Vector3 gun;
+    public Transform hipPosition;
+    public Transform aimingPosition;
+    public bool aimingDownSights = false;
+    Transform cam;
+
     [Header("Reloading Parameters")]
     public float reloadTime = 3f;
     bool isReloading;
@@ -45,28 +51,36 @@ public class PlayerGun : MonoBehaviour
     {
         RefillAmmo();
         construction = FindObjectOfType<ConstructionManager>();
+        cam = Camera.main.transform;
+        gun = gameObject.transform.position;
     }
 
     // Update is called once per frame
     void Update ()
     {
-		if (Input.GetButtonDown("Fire1") && !isReloading && !construction.data.blueprinted && !construction.data.constPanelOpen && !Rocket.instance.inspectingRocket)
-        {
-            Shoot();
-        }
+        Shoot();
+        //Aim();
     }
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(projectile, firePoint.transform.position, Quaternion.LookRotation(firePoint.transform.forward, firePoint.transform.up), projectileParent.transform);
-        ammo--;
-
-        if (ammo <= 0)
+        if (Input.GetButtonDown("Fire1") && !isReloading && !construction.data.blueprinted && !construction.data.constPanelOpen && !Rocket.instance.inspectingRocket)
         {
-            StartCoroutine(Reload());
-        }
+            GameObject bullet = Instantiate(projectile, firePoint.transform.position, Quaternion.LookRotation(firePoint.transform.forward, firePoint.transform.up), projectileParent.transform);
+            ammo--;
 
-        gunShot.Play();
+            if (ammo <= 0)
+            {
+                StartCoroutine(Reload());
+            }
+
+            gunShot.Play();
+        }
+    }
+
+    void Aim()
+    {
+        
     }
 
     IEnumerator Reload()

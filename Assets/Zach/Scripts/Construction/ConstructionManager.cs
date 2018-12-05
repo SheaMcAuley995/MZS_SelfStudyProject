@@ -39,12 +39,12 @@ public struct ConstructionData
     public float overlapDistance;
     public int costOfTurrets;
     public int costOfStorage;
+    public int costOfFactory;
 }
 
 public class ConstructionManager : MonoBehaviour
 {
     public ConstructionData data;
-    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 
 	// Use this for initialization
 	void Start ()
@@ -110,6 +110,11 @@ public class ConstructionManager : MonoBehaviour
                         // Builds the storage
                         BuildStorage();
                     }
+                    else if (data.buildingNum == 3)
+                    {
+                        // Builds the factory
+                        BuildFactory();
+                    }
                 }
                 else
                 {
@@ -128,7 +133,8 @@ public class ConstructionManager : MonoBehaviour
         data.cam.UnlockCursor();
         data.cam.camData.mouseSensitivity = 0f;
 
-        #region Turret Resource Requirement
+        #region Resource Requirements
+        //Turret Resource Requirement
         if (data.inventory.numberOfScraps < data.costOfTurrets)
         {
             data.buildingButtons[0].interactable = false;
@@ -139,9 +145,8 @@ public class ConstructionManager : MonoBehaviour
             data.buildingButtons[0].interactable = true;
             data.notEnoughScraps[0].SetActive(false);
         }
-        #endregion
 
-        #region Storage Resource Requirement
+        //Storage Resource Requirement
         if (data.inventory.numberOfScraps < data.costOfStorage)
         {
             data.buildingButtons[1].interactable = false;
@@ -151,6 +156,18 @@ public class ConstructionManager : MonoBehaviour
         {
             data.buildingButtons[1].interactable = true;
             data.notEnoughScraps[1].SetActive(false);
+        }
+
+        //Factory Resource Requirement
+        if (data.inventory.numberOfScraps < data.costOfFactory)
+        {
+            data.buildingButtons[2].interactable = false;
+            data.notEnoughScraps[2].SetActive(true);
+        }
+        else
+        {
+            data.buildingButtons[2].interactable = true;
+            data.notEnoughScraps[2].SetActive(false);
         }
         #endregion
     }
@@ -165,6 +182,7 @@ public class ConstructionManager : MonoBehaviour
         data.cam.camData.mouseSensitivity = 10f;
     }
 
+    #region Select Blueprints
     // Selects turret for construction, spawns the blueprint 
     public void SelectTurret()
     {
@@ -187,6 +205,19 @@ public class ConstructionManager : MonoBehaviour
         data.buildingBlueprint = Instantiate(data.transparentBuilding[1], pos, Quaternion.identity, data.player.transform);
     }
 
+    // Selects factory for construction, spawns the blueprint
+    public void SelectFactory()
+    {
+        CloseConstructionPanel();
+        data.blueprinted = true;
+        data.buildingNum = 3;
+
+        Vector3 pos = data.buildPos.transform.position;
+        data.buildingBlueprint = Instantiate(data.transparentBuilding[2], pos, Quaternion.identity, data.player.transform);
+    }
+    #endregion
+
+    #region Build Methods
     // Spawns turret at set location
     void BuildTurret()
     {
@@ -210,6 +241,19 @@ public class ConstructionManager : MonoBehaviour
         Vector3 pos = data.buildPos.transform.position;
         GameObject storage = Instantiate(data.builtBuilding[1], pos, Quaternion.identity);
     }
+
+    // Spawns a factory at set location
+    void BuildFactory()
+    {
+        data.inventory.numberOfScraps -= data.costOfFactory;
+
+        Destroy(data.buildingBlueprint);
+        data.blueprinted = false;
+
+        Vector3 pos = data.buildPos.transform.position;
+        GameObject factory = Instantiate(data.builtBuilding[2], pos, Quaternion.identity);
+    }
+    #endregion
 
     // Destroys the blueprint building if player cancels construction
     void DestroyBlueprint()
@@ -237,6 +281,7 @@ public class ConstructionManager : MonoBehaviour
         data.overlapDistance = 1f;
         data.costOfTurrets = 40;
         data.costOfStorage = 100;
+        data.costOfFactory = 200;
     }
     #endregion
 }
