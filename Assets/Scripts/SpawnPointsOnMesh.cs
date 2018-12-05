@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnPointsOnMesh : MonoBehaviour {
 
     [SerializeField] float spawnPointHieght;
+    [SerializeField] [Range(1, 100)] int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
     public MeshFilter filter;
     
@@ -13,13 +14,17 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     {  
         filter = GetComponent<MeshFilter>();
         spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
+        
+    }
+
+    private void Update()
+    {
         spawnNodesOnMesh(filter.mesh);
     }
 
-
     public void spawnNodesOnMesh(Mesh mesh)
     {
-        for(int i = 0; i < mesh.vertexCount; i++)
+        for(int i = 0; i < mesh.vertexCount; i += dstBetweenPoints)
         {
             Vector3 worldSpacePos = transform.TransformPoint(new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
            bool isSpawnable = (worldSpacePos.y > spawnPointHieght);
