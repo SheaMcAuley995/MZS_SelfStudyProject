@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SpawnPointsOnMesh : MonoBehaviour {
 
-    [SerializeField] float spawnPointHieght = 0;
-    [SerializeField] [Range(1, 100)] int dstBetweenPoints = 1;
+    public float spawnPointHieght = 0;
+    [Range(1, 100)] public int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
     [HideInInspector]public MeshFilter filter;
 
-    ChunkManager.TerrainChunk[] terrainChunks;
+    
 
     [Space]
-    [SerializeField] GameObject enemyToBeSpawned;
-    [SerializeField] int numberOfEnemiesToBeSpawned = 1;
+    public GameObject enemyToBeSpawned;
+    public int numberOfEnemiesToBeSpawned = 1;
 
     public SpawnPointsOnMesh(float _spawnPointHieght, int _dstBetweenPoints, MeshFilter _filter, GameObject _enemyToBeSpawned,int _numOfEnemies)
     {
@@ -29,9 +29,19 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     {  
         filter = GetComponent<MeshFilter>();
         spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
-        Initialize();
-      //  terrainChunks = FindObjectsOfType<ChunkManager.TerrainChunk>();
-        
+
+        var terrainChunks = GetComponents<ChunkManager.TerrainChunk>();
+
+        foreach(ChunkManager.TerrainChunk n in terrainChunks)
+        {
+            SpawnPointsOnMesh newSpawnMesh = n.meshObj.AddComponent<SpawnPointsOnMesh>();
+            newSpawnMesh.spawnPointHieght = spawnPointHieght;
+            newSpawnMesh.dstBetweenPoints = dstBetweenPoints;
+            newSpawnMesh.enemyToBeSpawned = enemyToBeSpawned;
+            newSpawnMesh.numberOfEnemiesToBeSpawned = numberOfEnemiesToBeSpawned;
+            newSpawnMesh.spawnNodesOnMesh(n.meshObj.GetComponent<MeshFilter>().mesh);
+            newSpawnMesh.spawnEnemies(newSpawnMesh.enemyToBeSpawned, newSpawnMesh.numberOfEnemiesToBeSpawned);
+        }
     }
 
     public void spawnNodesOnMesh(Mesh mesh)
@@ -49,11 +59,6 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     {
         spawnNodesOnMesh(filter.mesh);
         spawnEnemies(enemyToBeSpawned, numberOfEnemiesToBeSpawned);
-    }
-
-    public void findChunks()
-    {
-       
     }
 
     public void spawnEnemies(GameObject enemy, int enemiesToBeSpawned)

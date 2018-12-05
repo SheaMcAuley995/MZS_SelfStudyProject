@@ -68,7 +68,7 @@ public class ChunkManager : MonoBehaviour {
     }
     public class TerrainChunk
     {
-        GameObject meshObj;
+        public GameObject meshObj;
         SpawnPointsOnMesh spawnPoints;
         Vector2 pos;
         Bounds bounds;
