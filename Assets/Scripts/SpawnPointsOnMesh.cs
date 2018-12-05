@@ -7,19 +7,18 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     [SerializeField] float spawnPointHieght;
     [SerializeField] [Range(1, 100)] int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
-    public MeshFilter filter;
-    
+    [HideInInspector]public MeshFilter filter;
+
+    [Space]
+    [SerializeField] GameObject enemyToBeSpawned;
+    [SerializeField] int numberOfEnemiesToBeSpawned = 1;
+
 
     private void Start()
     {  
         filter = GetComponent<MeshFilter>();
         spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
-        
-    }
-
-    private void Update()
-    {
-        spawnNodesOnMesh(filter.mesh);
+        Initialize();
     }
 
     public void spawnNodesOnMesh(Mesh mesh)
@@ -30,6 +29,28 @@ public class SpawnPointsOnMesh : MonoBehaviour {
            bool isSpawnable = (worldSpacePos.y > spawnPointHieght);
            spawnGrid[i] = new SpawnPointNode(isSpawnable, worldSpacePos);
            Debug.Log(worldSpacePos);
+        }
+    }
+
+    public void Initialize()
+    {
+        spawnNodesOnMesh(filter.mesh);
+        spawnEnemies(enemyToBeSpawned, numberOfEnemiesToBeSpawned);
+    }
+
+    public void spawnEnemies(GameObject enemy, int enemiesToBeSpawned)
+    {
+        for(int i = 0; i < enemiesToBeSpawned; i++)
+        {
+            int spawnPointIndex = Random.Range(0, spawnGrid.Length);
+            if(spawnGrid[spawnPointIndex].spawnable)
+            {
+                Instantiate(enemyToBeSpawned, spawnGrid[spawnPointIndex].worldPosition, transform.rotation);
+            }
+            else
+            {
+                i--;
+            }
         }
     }
 
