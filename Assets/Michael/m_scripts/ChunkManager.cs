@@ -68,29 +68,35 @@ public class ChunkManager : MonoBehaviour {
     }
     public class TerrainChunk
     {
-        GameObject meshObj;
+        public GameObject meshObj;
         SpawnPointsOnMesh spawnPoints;
         Vector2 pos;
         Bounds bounds;
         MapData mapData;
         MeshRenderer meshRenderer;
         MeshFilter meshFilter;
+        MeshCollider meshCollider;
         LODInfo[] detailLevels;
         LODMesh[] lodMeshes;
         bool mapDataRecieved;
         int prevLOD = -1;
-
+        int i = 0;
         public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, Transform parent, Material mat)
         {
             this.detailLevels = detailLevels;
             pos = coord * size;
             bounds = new Bounds(pos, Vector2.one * size);
             Vector3 posV3 = new Vector3(pos.x, 0, pos.y);
-            meshObj = new GameObject("Terrain Chunk");
+            
+            meshObj = new GameObject("Terrain Chunk ");
+            
             meshRenderer = meshObj.AddComponent<MeshRenderer>();
             meshFilter = meshObj.AddComponent<MeshFilter>();
+            meshCollider = meshObj.AddComponent<MeshCollider>();
+            meshCollider.sharedMesh = meshFilter.sharedMesh;
             meshRenderer.material = mat;
-            meshObj.transform.position = posV3*scale;           
+            
+            meshObj.transform.position = posV3*scale; 
             meshObj.transform.parent = parent;
             meshObj.transform.localScale = Vector3.one * scale;
             SetVisible(false);
@@ -138,6 +144,7 @@ public class ChunkManager : MonoBehaviour {
                         {
                             prevLOD = lodIdx;
                             meshFilter.mesh = LODmesh.mesh;
+                            meshCollider.sharedMesh = meshFilter.mesh;
                         }
                         else if (!LODmesh.hasRequestedMEsh)
                         {
