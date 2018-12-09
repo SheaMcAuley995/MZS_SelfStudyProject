@@ -90,21 +90,33 @@ public class Interact : MonoBehaviour
     }
     #endregion
 
-    #region Interaction
-    // Player inteacts with the given object, actions depending on which object it is
+    // Player inteacts with the given object
     void InteractWithObject()
+    {
+        if (objectType.layer == 12) // layer 12 = "Building"
+        {
+            InteractWithBuilding();
+        }
+    }
+
+    #region Interaction
+    void InteractWithBuilding()
     {
         if (objectType.CompareTag("Rocket"))
         {
             InteractWithRocket();
         }
-        else if (objectType.layer == 12)
+        else if (objectType.CompareTag("Turret"))
         {
-            InteractWithBuilding();
+            InteractWithTurret();
         }
-        else
+        else if (objectType.CompareTag("Storage"))
         {
-            // Do code for objects that need interacting
+            InteractWithStorage();
+        }
+        else if (objectType.CompareTag("Factory"))
+        {
+            InteractWithFactory();
         }
     }
 
@@ -120,19 +132,25 @@ public class Interact : MonoBehaviour
         }
     }
 
-    void InteractWithBuilding()
+    void InteractWithTurret()
     {
-        if (objectType.CompareTag("Turret"))
+        Debug.Log("Open deconstruction UI");
+    }
+
+    void InteractWithStorage()
+    {
+        Debug.Log("Open storage inventory UI");
+    }
+
+    void InteractWithFactory()
+    {
+        if (!Factory.instance.inspectingFactory && !construction.data.blueprinted)
         {
-            // Open deconstruction UI
+            Factory.instance.OpenFactoryUI();
         }
-        else if (objectType.CompareTag("Storage"))
+        else
         {
-            // Open storage inventory UI
-        }
-        else if (objectType.CompareTag("Factory"))
-        {
-            // Open factory UI
+            Factory.instance.CloseFactoryUI();
         }
     }
     #endregion
