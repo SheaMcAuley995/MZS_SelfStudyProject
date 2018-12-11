@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SpawnPointsOnMesh : MonoBehaviour {
 
+    [Header("Should I generate Nodes?")]
+    [SerializeField] bool generateNodes = false;
+    [SerializeField] bool showNodesInInspector = false;
+    [Space]
     public float spawnPointHieght = 0;
     [Range(1, 100)] public int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
     [HideInInspector]public MeshFilter filter;
-
+    
     [Space]
+    public GameObject ScrapsPrefab;
+    public int numberOfScrapsToBeSpawned = 1;
     public GameObject enemyToBeSpawned;
     public int numberOfEnemiesToBeSpawned = 1;
 
@@ -22,54 +29,48 @@ public class SpawnPointsOnMesh : MonoBehaviour {
         numberOfEnemiesToBeSpawned = _numOfEnemies;
     }
 
+    private void OnValidate()
+    {
+        if (generateNodes)
+        {
+            filter = GetComponent<MeshFilter>();
+            spawnGrid = new SpawnPointNode[filter.mesh.vertexCount];
+            spawnNodesOnMesh(filter.mesh);
+            generateNodes = false;
+        }
+    }
 
     private void Start()
-    {  
-        //filter = GetComponent<MeshFilter>();
-        //spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
-
-        var terrainChunks = GetComponentsInChildren<GameObject>();
-
-        foreach(GameObject n in terrainChunks)
-        {
-            Debug.Log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-            SpawnPointsOnMesh newSpawnMesh = n.AddComponent<SpawnPointsOnMesh>();
-            filter = n.GetComponent<MeshFilter>();
-            newSpawnMesh.spawnPointHieght = spawnPointHieght;
-            newSpawnMesh.dstBetweenPoints = dstBetweenPoints;
-            newSpawnMesh.enemyToBeSpawned = enemyToBeSpawned;
-            newSpawnMesh.numberOfEnemiesToBeSpawned = numberOfEnemiesToBeSpawned;
-            newSpawnMesh.spawnGrid = new SpawnPointNode[filter.mesh.vertexCount + 1];
-            newSpawnMesh.spawnNodesOnMesh(n.GetComponent<MeshFilter>().mesh);
-            newSpawnMesh.spawnEnemies(newSpawnMesh.enemyToBeSpawned, newSpawnMesh.numberOfEnemiesToBeSpawned);
-        }
+    {
+        Initialize();
     }
 
     public void spawnNodesOnMesh(Mesh mesh)
     {
         for(int i = 0; i < mesh.vertexCount; i += dstBetweenPoints)
         {
-            Vector3 worldSpacePos = transform.TransformPoint(new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
+           Vector3 worldSpacePos = transform.TransformPoint(new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
            bool isSpawnable = (worldSpacePos.y > spawnPointHieght);
            spawnGrid[i] = new SpawnPointNode(isSpawnable, worldSpacePos);
-           Debug.Log(worldSpacePos);
         }
+        Debug.Log(mesh.vertexCount);
     }
 
     public void Initialize()
     {
-        spawnNodesOnMesh(filter.mesh);
-        spawnEnemies(enemyToBeSpawned, numberOfEnemiesToBeSpawned);
+        spawnObjects(enemyToBeSpawned, numberOfEnemiesToBeSpawned);
+        spawnObjects(ScrapsPrefab, numberOfScrapsToBeSpawned);
     }
 
-    public void spawnEnemies(GameObject enemy, int enemiesToBeSpawned)
+    public void spawnObjects(GameObject Object, int enemiesToBeSpawned)
     {
         for(int i = 0; i < enemiesToBeSpawned; i++)
         {
             int spawnPointIndex = Random.Range(0, spawnGrid.Length);
             if(spawnGrid[spawnPointIndex].spawnable)
             {
-                Instantiate(enemyToBeSpawned, spawnGrid[spawnPointIndex].worldPosition, transform.rotation);
+                Instantiate(Object, spawnGrid[spawnPointIndex].worldPosition, transform.rotation);
+                spawnGrid[spawnPointIndex].spawnable = false;
             }
             else
             {
@@ -78,20 +79,23 @@ public class SpawnPointsOnMesh : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        foreach(SpawnPointNode n in spawnGrid)
+   private void OnDrawGizmos()
+   {
+        if(showNodesInInspector)
         {
-            if(!n.spawnable)
+            foreach (SpawnPointNode n in spawnGrid)
             {
-                Gizmos.color = Color.red;
+                if (!n.spawnable)
+                {
+                    Gizmos.color = Color.red;
+                }
+                else
+                {
+                    Gizmos.color = Color.green;
+                }
+
+                Gizmos.DrawSphere(n.worldPosition, 0.1f);
             }
-            else
-            {
-                Gizmos.color = Color.green;
-            }
-            
-            Gizmos.DrawSphere(n.worldPosition, 0.1f);
         }
-    }
+   }
 }
