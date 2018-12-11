@@ -61,6 +61,15 @@ public class MapGen : MonoBehaviour
             map.DrawTexture(TextureGen.TextureFromHeightMap(FalloffMapGenerator.GenerateFalloffMapp(mapChunkSize)));
         }
     }
+    private void Start()
+    {
+        Map map = FindObjectOfType<Map>();
+        MapData mapdata = GenThatMapData(Vector2.zero);
+        if (drawMode == DrawMode.DrawMesh)
+        {
+            map.DrawMesh(MeshGen.GennerateTerrainMesh(mapdata.heightMap, meshHeight, meshHeightCurve, editorlevelOfDetail), TextureGen.TextureFromColorMap(mapdata.colorMap, mapChunkSize, mapChunkSize));
+        }
+    }
 
     public void RequestMapData(Vector2 center, Action<MapData> callback)
     {

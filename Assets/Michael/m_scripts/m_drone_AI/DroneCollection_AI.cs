@@ -54,14 +54,14 @@ public class DroneCollection_AI : MonoBehaviour
     public bool foundScrap;
     public int maxTime = 30;
     public int minTime = 5;
-    private List<Transform> nodes;
+    private List<GameObject> nodes;
     private int currentNode = 0;
 
     [Header("d r o n e  s c r a p s")]
     private int scrapsCollected = 0;
     //public Text scrapCounter;
     public TextMeshPro scrapCounter;
-    public List<Transform> dispNodes;
+    public List<GameObject> dispNodes;
     // Use this for initialization
     void Start()
     {
@@ -102,6 +102,10 @@ public class DroneCollection_AI : MonoBehaviour
         nodes = GetComponentInChildren<ConeDetector>().scraps;
         if (nodes.Count > 0)
         {
+            if (nodes[currentNode].gameObject.activeSelf == false)
+            {
+                nodes.Remove(nodes[currentNode]);
+            }
             foundScrap = true;
         }
 
@@ -110,9 +114,9 @@ public class DroneCollection_AI : MonoBehaviour
     {
         if (foundScrap)
         {
-            Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
+            Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
 
-            float newSteer = (relativeVector.x / relativeVector.magnitude) * decidedSteerAngle;
+            float newSteer = (relativeVector.x / relativeVector.magnitude) * maxSteerAngle;
             targetSteerAngle = newSteer;
             fl.steerAngle = Mathf.Lerp(fl.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
             fr.steerAngle = Mathf.Lerp(fr.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
@@ -146,12 +150,12 @@ public class DroneCollection_AI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, nodes[currentNode].position);
+        Gizmos.DrawLine(transform.position, nodes[currentNode].transform.position);
     }
 
     private void ApplySteering()
     {
-        Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
+        Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
 
         float newSteer = (relativeVector.x / relativeVector.magnitude) * decidedSteerAngle;
         targetSteerAngle = newSteer;       
@@ -188,7 +192,7 @@ public class DroneCollection_AI : MonoBehaviour
     }
     private void CheckWaypoint()
     {
-        if (Vector3.Distance(transform.position, nodes[currentNode].position) < switchDistance)
+        if (Vector3.Distance(transform.position, nodes[currentNode].transform.position) < switchDistance)
         {
 
             if (currentNode == nodes.Count - 1)
@@ -197,6 +201,10 @@ public class DroneCollection_AI : MonoBehaviour
             }
             else
             {
+                if (nodes[currentNode].gameObject.activeSelf == false)
+                {
+                    nodes.Remove(nodes[currentNode]);
+                }
                 currentNode++;
                 scrapsCollected++;
                 scrapCounter.text = scrapsCollected.ToString();
@@ -224,7 +232,7 @@ public class DroneCollection_AI : MonoBehaviour
 
     private void SlowOnApproach()
     {
-        if (Vector3.Distance(transform.position, nodes[currentNode].position) < brakeDistance)
+        if (Vector3.Distance(transform.position, nodes[currentNode].transform.position) < brakeDistance)
         {
             StartCoroutine(doBrakes());
 
@@ -242,6 +250,7 @@ public class DroneCollection_AI : MonoBehaviour
     {
         if (other.CompareTag("Pickup"))
         {
+            nodes.Remove(other.gameObject);
             scrapsCollected++;
             scrapCounter.text = scrapsCollected.ToString();
             other.gameObject.SetActive(false);

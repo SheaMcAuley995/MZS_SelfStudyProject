@@ -66,7 +66,7 @@ Shader "Transparent/HoloShader"
 				fixed4 col = tex2D(_MainTex, i.uv);
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
-				col = _Color * max(0, sin(i.objVertex.y * _ScanningFrequency + _Time.x * _ScanningSpeed) + _Bias);
+				col = _Color * max(0, sin(i.objVertex.z * _ScanningFrequency + _Time.x * _ScanningSpeed) + _Bias);
 				//col *= 1 - max(0, cos(i.objVertex.y * i.objVertex.x * _ScanningFrequency + _Time.x * _ScanningSpeed) + 0.01);
 				//col *= 1 - max(0, sin(i.objVertex.y *i.objVertex.z * _ScanningFrequency + _Time.x * _ScanningSpeed) + 0.01);
 				col.w = _Color.a;
