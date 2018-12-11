@@ -35,7 +35,7 @@ public class StateMachine : MonoBehaviour {
 
     void Wonder()
     {
-        drone.Wander();
+        //drone.Wander();
         //finds scarap then state = States.Fetch;
     }
 

@@ -58,7 +58,7 @@ public class DroneCollection_AI : MonoBehaviour
     private int currentNode = 0;
 
     [Header("d r o n e  s c r a p s")]
-    public int scrapsCollected = 0;
+    private int scrapsCollected = 0;
     //public Text scrapCounter;
     public TextMeshPro scrapCounter;
     public List<Transform> dispNodes;
@@ -67,13 +67,14 @@ public class DroneCollection_AI : MonoBehaviour
     {
         
         GetComponent<Rigidbody>().centerOfMass = CenterOfMass;
-        Transform[] patrolTransforms = path.GetComponentsInChildren<Transform>();
-        nodes = new List<Transform>();
-        for (int i = 0; i < patrolTransforms.Length; i++)
-        {
-            if (patrolTransforms[i] != path.transform)
-            { nodes.Add(patrolTransforms[i]); }
-        }
+        nodes = GetComponentInChildren<ConeDetector>().scraps;
+        //Transform[] patrolTransforms = path.GetComponentsInChildren<Transform>();
+        //nodes = new List<Transform>();
+        //for (int i = 0; i < patrolTransforms.Length; i++)
+        //{
+        //    if (patrolTransforms[i] != path.transform)
+        //    { nodes.Add(patrolTransforms[i]); }
+        //}
 
         boost = UnityEngine.Random.Range(motorBoost, maxMotorBoost);
         switchDistance = UnityEngine.Random.Range(maxSwitchDistance, minSwitchDistance);
@@ -91,7 +92,7 @@ public class DroneCollection_AI : MonoBehaviour
         Fetch();
         //ApplySteering();
         //ApplyBrakes();
-        //CheckWaypoint();
+        CheckWaypoint();
         //SlowOnApproach();
         Sense();
         dispNodes = nodes;
@@ -99,7 +100,7 @@ public class DroneCollection_AI : MonoBehaviour
     private void Sense()
     {
         nodes = GetComponentInChildren<ConeDetector>().scraps;
-        if (nodes.Count > 1)
+        if (nodes.Count > 0)
         {
             foundScrap = true;
         }
@@ -115,6 +116,10 @@ public class DroneCollection_AI : MonoBehaviour
             targetSteerAngle = newSteer;
             fl.steerAngle = Mathf.Lerp(fl.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
             fr.steerAngle = Mathf.Lerp(fr.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
+            if (nodes.Count <= 0)
+            {
+                foundScrap = false;
+            }
         }
         
     }
@@ -138,11 +143,11 @@ public class DroneCollection_AI : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawLine(transform.position, nodes[currentNode].position);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, nodes[currentNode].position);
+    }
 
     private void ApplySteering()
     {
@@ -216,12 +221,6 @@ public class DroneCollection_AI : MonoBehaviour
         
     }
 
-
-    void LerpToSteer()
-    {
-        fl.steerAngle = Mathf.Lerp(fl.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
-        fr.steerAngle = Mathf.Lerp(fr.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
-    }
 
     private void SlowOnApproach()
     {
