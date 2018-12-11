@@ -10,7 +10,7 @@ public class SpawnPointsOnMesh : MonoBehaviour {
     [SerializeField] bool showNodesInInspector = false;
     [Space]
     public float spawnPointHieght = 0;
-    [Range(1, 100)] public int dstBetweenPoints = 1;
+    [Range(1, 10)] public int dstBetweenPoints = 1;
     public SpawnPointNode[] spawnGrid;
     [HideInInspector]public MeshFilter filter;
     
@@ -34,7 +34,7 @@ public class SpawnPointsOnMesh : MonoBehaviour {
         if (generateNodes)
         {
             filter = GetComponent<MeshFilter>();
-            spawnGrid = new SpawnPointNode[filter.mesh.vertexCount];
+            spawnGrid = new SpawnPointNode[(filter.mesh.vertexCount/dstBetweenPoints) - 1];
             spawnNodesOnMesh(filter.mesh);
             generateNodes = false;
         }
@@ -47,13 +47,13 @@ public class SpawnPointsOnMesh : MonoBehaviour {
 
     public void spawnNodesOnMesh(Mesh mesh)
     {
-        for(int i = 0; i < mesh.vertexCount; i += dstBetweenPoints)
+        for(int i = 0; i < mesh.vertexCount/dstBetweenPoints - 1; i = dstBetweenPoints + i)
         {
            Vector3 worldSpacePos = transform.TransformPoint(new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
            bool isSpawnable = (worldSpacePos.y > spawnPointHieght);
            spawnGrid[i] = new SpawnPointNode(isSpawnable, worldSpacePos);
         }
-        Debug.Log(mesh.vertexCount);
+        //Debug.Log(mesh.vertexCount);
     }
 
     public void Initialize()
