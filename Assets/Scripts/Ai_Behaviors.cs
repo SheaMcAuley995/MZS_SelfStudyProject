@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum FoodType { Carnivore, Herbivore, Omnivore }
 public enum MoodType { Passive, Neutral, Aggressive }
@@ -46,15 +47,25 @@ public class Ai_Behaviors : MonoBehaviour {
     private StatusType SleepStatus = StatusType.High;
     private StatusType HealthStatus = StatusType.High;
 
+    [SerializeField] float statChangeSpeed = 0.1f;
+    GameObject curTarget;
+    [SerializeField] GameObject sleepTarget;
+    [SerializeField] GameObject eatTarget;
+
     bool sleeping = false;
-    bool eating = true;
+    bool eating = false;
+    float priority_Food = 0;
+    float priority_Sleep = 0;
+
+    NavMeshAgent agent;
 
     private void Start()
     {
-        cur_Food = food_Max;
+        cur_Food = food_Max - 1;
         cur_Health = health_Max;
         cur_Sleep = sleep_Max;
 
+        agent = GetComponent<NavMeshAgent>();
 
         switch (foodType)
         {
@@ -86,9 +97,31 @@ public class Ai_Behaviors : MonoBehaviour {
 
     private void Update()
     {
-        cur_Food--;
-        cur_Sleep--;
         determineState();
+        aiBehavior();
+
+        agent.SetDestination(curTarget.transform.position);
+
+        if (Vector3.Distance(sleepTarget.transform.position, transform.position) > 2)
+        {
+            cur_Sleep -= statChangeSpeed;
+        }
+        else
+        {
+            cur_Sleep += statChangeSpeed * 5;
+        }
+
+        if (Vector3.Distance(eatTarget.transform.position, transform.position) > 2)
+        {
+            cur_Food -= statChangeSpeed;
+        }
+        else
+        {
+            cur_Food += statChangeSpeed * 5;
+        }
+
+        cur_Food = Mathf.Clamp(cur_Food, 0, food_Max);
+        cur_Sleep = Mathf.Clamp(cur_Sleep, 0, sleep_Max);
         //Debug.Log("Food :" + updateCurrentStatus_Food(cur_Food, food_Max, statusCurves_Food));
         //Debug.Log("Sleep :" + updateCurrentStatus_Food(cur_Sleep, sleep_Max, statusCurves_Sleep));
     }
@@ -117,8 +150,6 @@ public class Ai_Behaviors : MonoBehaviour {
 
     private void determineState()
     {
-        float priority_Food = 0;
-        float priority_Sleep = 0;
 
         switch (SleepStatus)
         {
@@ -145,38 +176,47 @@ public class Ai_Behaviors : MonoBehaviour {
                 priority_Food = evaluateStatus(cur_Food, food_Max) * 1;
                 break;
         }
-       // Debug.Log("Food Priority :" + priority_Food);
-        if (priority_Food > priority_Sleep)
+        // Debug.Log("Food Priority :" + priority_Food);
+
+
+        if (priority_Food <= priority_Sleep)
         {
-            
             if(sleeping)
             {
+                Debug.Log("I am Sleeping");
                 aiBehavior -= Behavior_Sleep;
                 sleeping = false;
             }
             if(!eating)
             {
-                eating = true;
+                Debug.Log("I am Eating");
                 aiBehavior += Behavior_Eat;
+                eating = true;
             }
 
         }
-        else
+
+        if(priority_Sleep < priority_Food)
         {
+            Debug.Log("This happens");
             //Debug.Log("Sleep Prioirty :" + priority_Sleep);
-            if(eating)
+            if (!sleeping)
             {
+                Debug.Log("I am Sleeping");
+                aiBehavior += Behavior_Sleep;
+                sleeping = true;
+            }
+            if (eating)
+            {
+                Debug.Log("I am Eating");
                 aiBehavior -= Behavior_Eat;
                 eating = false;
             }
-            if(!sleeping)
-            {
-                sleeping = true;
-                aiBehavior += Behavior_Sleep;
-            }
-
 
         }
+
+        priority_Sleep = Mathf.Clamp01(priority_Sleep);
+        priority_Food = Mathf.Clamp01(priority_Food);
 
     }
 
@@ -185,7 +225,7 @@ public class Ai_Behaviors : MonoBehaviour {
         return currentStatus / statusMax;
     }
 
-
+    
 
     #region Behaviors
     public void Behavior_Carnivore()
@@ -216,13 +256,11 @@ public class Ai_Behaviors : MonoBehaviour {
 
     public void Behavior_Eat()
     {
-        Debug.Log("I am Eating");
-        cur_Food+= 2;
+        curTarget = eatTarget;
     }
     public void Behavior_Sleep()
     {
-        Debug.Log("I am Sleeping");
-        cur_Sleep += 2;
+        curTarget = sleepTarget;
     }
 
     #endregion
