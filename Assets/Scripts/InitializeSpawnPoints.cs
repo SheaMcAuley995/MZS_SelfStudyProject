@@ -16,8 +16,8 @@ public class InitializeSpawnPoints : MonoBehaviour {
 
     IEnumerator Start() {
 
-        yield return new WaitForSeconds(5);
-        Debug.Log("Finished Loading");
+        yield return new WaitForSeconds(1);
+        //Debug.Log("Finished Loading");
         terrainChunks = GetComponentsInChildren<Transform>();
         
         for (int i = 1; i < terrainChunks.Length; i++)
