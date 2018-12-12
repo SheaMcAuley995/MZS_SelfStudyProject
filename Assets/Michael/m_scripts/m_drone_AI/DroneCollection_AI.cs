@@ -59,9 +59,12 @@ public class DroneCollection_AI : MonoBehaviour
 
     [Header("d r o n e  s c r a p s")]
     private int scrapsCollected = 0;
-    //public Text scrapCounter;
+    public int maxScraps;
+    public bool scrapsFull;
     public TextMeshPro scrapCounter;
     public List<GameObject> dispNodes;
+    public GameObject HomePrism;
+
     // Use this for initialization
     void Start()
     {
@@ -84,19 +87,39 @@ public class DroneCollection_AI : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        
-        
+    {    
         Drive();
         Wander();
         Fetch();
+        ReturnScraps();
         //ApplySteering();
         //ApplyBrakes();
         CheckWaypoint();
         //SlowOnApproach();
         Sense();
         dispNodes = nodes;
+        if (scrapsCollected == maxScraps)
+        {
+            scrapsFull = true;
+        }
     }
+
+    private void ReturnScraps()
+    {
+        if (scrapsFull)
+        {
+
+            
+            Vector3 relativeVector = transform.InverseTransformPoint(HomePrism.transform.position);
+
+            float newSteer = (relativeVector.x / relativeVector.magnitude) * maxSteerAngle;
+            targetSteerAngle = newSteer;
+            fl.steerAngle = Mathf.Lerp(fl.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
+            fr.steerAngle = Mathf.Lerp(fr.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
+            
+        }
+    }
+
     private void Sense()
     {
         nodes = GetComponentInChildren<ConeDetector>().scraps;
@@ -113,7 +136,7 @@ public class DroneCollection_AI : MonoBehaviour
     }
     private void Fetch()
     {
-        if (foundScrap)
+        if (foundScrap && !scrapsFull)
         {
             Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
 
@@ -128,9 +151,6 @@ public class DroneCollection_AI : MonoBehaviour
         }
         
     }
-
-    
-
     private void ApplyBrakes()
     {
         breakMultiplier = currentSpeed / brakeDistance;
@@ -147,13 +167,11 @@ public class DroneCollection_AI : MonoBehaviour
             brakeLights.SetActive(false);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, nodes[currentNode].transform.position);
-    }
-
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawLine(transform.position, nodes[currentNode].transform.position);
+    //}
     private void ApplySteering()
     {
         Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
@@ -219,7 +237,7 @@ public class DroneCollection_AI : MonoBehaviour
     public void Wander()
     {
 
-        if (!foundScrap)
+        if (!foundScrap && !scrapsFull)
         {
             Vector3 relativeVector = transform.InverseTransformPoint(transform.forward);
 
@@ -232,8 +250,6 @@ public class DroneCollection_AI : MonoBehaviour
         }
         
     }
-
-
     private void SlowOnApproach()
     {
         if (Vector3.Distance(transform.position, nodes[currentNode].transform.position) < brakeDistance)
@@ -243,7 +259,6 @@ public class DroneCollection_AI : MonoBehaviour
         }
         else { isBreaking = false; }
     }
-
     IEnumerator doBrakes()
     {
         isBreaking = true;
