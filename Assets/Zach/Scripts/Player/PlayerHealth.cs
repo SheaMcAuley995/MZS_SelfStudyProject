@@ -33,10 +33,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
     public float currentHealth;
     float lowHealth;
     float noHealth = 0f;
+    float oneHundred = 100f;
 
     [Header("UI Elements")]
     public Image healthBar;
     public Text healthText;
+    string percentage = "%";
+    string playerDeath = "Player has died - NYI";
 
 	// Use this for initialization
 	void Start ()
@@ -66,7 +69,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
 
     public void Die()
     {
-        Debug.Log("Player has died - NYI");
+        Debug.Log(playerDeath);
     }
 
     void SetHealth()
@@ -81,6 +84,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable<float>
         currentHealth = Mathf.RoundToInt(currentHealth);
         currentHealth = Mathf.Clamp(currentHealth, noHealth, startHealth);
         healthBar.fillAmount = currentHealth / startHealth;
-        healthText.text = ((currentHealth / startHealth) * 100).ToString() + "%";
+        healthText.text = ((currentHealth / startHealth) * oneHundred).ToString() + percentage;
     }
 }

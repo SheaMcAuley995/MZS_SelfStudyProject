@@ -31,7 +31,8 @@ public class ThirdPersonController : MonoBehaviour
     [Header("Jetpack Settings")]
     public float startFuel = 100f;
     public float currentFuel;
-    public float fuelDrainAmount = 5f;
+    public float fuelDrainAmount = 20f;
+    public float fuelRefillAmount = 10f;
     float noFuel = 0f;
 
     [Header("Fall Damage Settings")]
@@ -53,6 +54,7 @@ public class ThirdPersonController : MonoBehaviour
     Space localSpace = Space.Self;
     string horizontal;
     string vertical;
+    string percentage = "%";
     float fullAnimSpeed = 1f;
     float halfAnimSpeed = 0.5f;
     float zeroSeconds = 0f;
@@ -128,10 +130,10 @@ public class ThirdPersonController : MonoBehaviour
     {
         currentFallTime = zeroSeconds;
 
-        rb.useGravity = false;
+        rb.useGravity = false;      
         transform.Translate(transform.up * jetpackSpeed * deltaTime, worldSpace);
 
-        currentFuel -= fuelDrainAmount * Time.deltaTime;
+        currentFuel -= fuelDrainAmount * deltaTime;
         HandleUI();
     }
 
@@ -143,7 +145,13 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         // Begins calculating fall damage
-        currentFallTime += oneSecond * Time.deltaTime;
+        currentFallTime += oneSecond * deltaTime;
+
+        if (currentFuel != startFuel)
+        {
+            currentFuel += fuelRefillAmount * deltaTime;
+            HandleUI();
+        }
     }
 
     // If the player hits something...
@@ -161,6 +169,7 @@ public class ThirdPersonController : MonoBehaviour
             }
             else if (currentFallTime >= deathFallTime)
             {
+                // Kek you died y u fall so much maybe learn? 
                 float fallDamageToTake = PlayerHealth.instance.currentHealth;
                 PlayerHealth.instance.TakeDamage(fallDamageToTake);
                 PlayerHealth.instance.Die();
@@ -178,11 +187,11 @@ public class ThirdPersonController : MonoBehaviour
     // Handles the updating of jetpack fuel UI
     void HandleUI()
     {
-        currentFuel = Mathf.RoundToInt(currentFuel);
-        currentFuel = Mathf.Clamp(currentFuel, noFuel, startFuel);
+        float currentFuelInt = Mathf.RoundToInt(currentFuel);
+        currentFuelInt = Mathf.Clamp(currentFuelInt, noFuel, startFuel);
 
-        fuelBar.fillAmount = currentFuel / startFuel;
-        fuelPercent.text = ((currentFuel / startFuel) * oneHundredPercent).ToString() + "%";
+        fuelBar.fillAmount = currentFuelInt / startFuel;
+        fuelPercent.text = ((currentFuelInt / startFuel) * oneHundredPercent).ToString() + percentage;
     }
 
     // Gets components like animator at start in case I'm a doof and forget to set them in the inspector
