@@ -59,14 +59,20 @@ public class Ai_Behaviors : MonoBehaviour {
 
     NavMeshAgent agent;
 
+    private void OnValidate()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+
     private void Start()
     {
         cur_Food = food_Max - 1;
         cur_Health = health_Max;
         cur_Sleep = sleep_Max;
 
-        agent = GetComponent<NavMeshAgent>();
-
+       //agent = GetComponent<NavMeshAgent>();
+        
         switch (foodType)
         {
             case FoodType.Carnivore:
@@ -97,37 +103,41 @@ public class Ai_Behaviors : MonoBehaviour {
 
     private void Update()
     {
+        foodStatus = updateCurrentStatus(cur_Food, food_Max, statusCurves_Food);
+        SleepStatus = updateCurrentStatus(cur_Sleep, sleep_Max, statusCurves_Sleep);
+
         determineState();
         aiBehavior();
-
-        agent.SetDestination(curTarget.transform.position);
+        
 
         if (Vector3.Distance(sleepTarget.transform.position, transform.position) > 2)
         {
-            cur_Sleep -= statChangeSpeed;
+            cur_Sleep -= statChangeSpeed * Time.deltaTime;
         }
         else
         {
-            cur_Sleep += statChangeSpeed * 5;
+            cur_Sleep += statChangeSpeed * 5 * Time.deltaTime;
         }
 
         if (Vector3.Distance(eatTarget.transform.position, transform.position) > 2)
         {
-            cur_Food -= statChangeSpeed;
+            cur_Food -= statChangeSpeed * Time.deltaTime;
         }
         else
         {
-            cur_Food += statChangeSpeed * 5;
+            cur_Food += statChangeSpeed * 5 * Time.deltaTime;
         }
 
         cur_Food = Mathf.Clamp(cur_Food, 0, food_Max);
         cur_Sleep = Mathf.Clamp(cur_Sleep, 0, sleep_Max);
         //Debug.Log("Food :" + updateCurrentStatus_Food(cur_Food, food_Max, statusCurves_Food));
         //Debug.Log("Sleep :" + updateCurrentStatus_Food(cur_Sleep, sleep_Max, statusCurves_Sleep));
+        agent.SetDestination(curTarget.transform.position);
+
     }
 
 
-    private StatusType updateCurrentStatus_Food(float Type_Current, float Type_Max, StatusCurves statusCurves)
+    private StatusType updateCurrentStatus(float Type_Current, float Type_Max, StatusCurves statusCurves)
     {
         if (statusCurves.status_High.Evaluate(evaluateStatus(Type_Current, Type_Max)) > statusCurves.status_Med.Evaluate(evaluateStatus(Type_Current, Type_Max)) &&
             statusCurves.status_High.Evaluate(evaluateStatus(Type_Current, Type_Max)) > statusCurves.status_Low.Evaluate(evaluateStatus(Type_Current, Type_Max)))
@@ -143,7 +153,7 @@ public class Ai_Behaviors : MonoBehaviour {
 
         else
         {
-            throw new System.Exception(statusCurves.ToString() + " status is having some trouble");
+            return StatusType.Low;
         }
 
     }
@@ -167,19 +177,19 @@ public class Ai_Behaviors : MonoBehaviour {
         switch (foodStatus)
         {
             case StatusType.High:
-                priority_Food = evaluateStatus(cur_Food, food_Max) * 0.25f;
+                priority_Food = evaluateStatus(cur_Food, food_Max) /4;
                 break;
             case StatusType.Med:
-                priority_Food = evaluateStatus(cur_Food, food_Max) * 0.5f;
+                priority_Food = evaluateStatus(cur_Food, food_Max) /2;
                 break;
             case StatusType.Low:
-                priority_Food = evaluateStatus(cur_Food, food_Max) * 1;
+                priority_Food = evaluateStatus(cur_Food, food_Max) ;
                 break;
         }
         // Debug.Log("Food Priority :" + priority_Food);
 
 
-        if (priority_Food <= priority_Sleep)
+        if (priority_Food >= priority_Sleep)
         {
             if(sleeping)
             {
@@ -196,7 +206,7 @@ public class Ai_Behaviors : MonoBehaviour {
 
         }
 
-        if(priority_Sleep < priority_Food)
+        if(priority_Sleep > priority_Food)
         {
             Debug.Log("This happens");
             //Debug.Log("Sleep Prioirty :" + priority_Sleep);
