@@ -34,7 +34,7 @@ public class SpawnPointsOnMesh : MonoBehaviour {
         if (generateNodes)
         {
             filter = GetComponent<MeshFilter>();
-            spawnGrid = new SpawnPointNode[(filter.mesh.vertexCount/dstBetweenPoints) - 1];
+            spawnGrid = new SpawnPointNode[filter.mesh.vertexCount / dstBetweenPoints +1];
             spawnNodesOnMesh(filter.mesh);
             generateNodes = false;
         }
@@ -47,11 +47,12 @@ public class SpawnPointsOnMesh : MonoBehaviour {
 
     public void spawnNodesOnMesh(Mesh mesh)
     {
-        for(int i = 0; i < mesh.vertexCount/dstBetweenPoints - 1; i = dstBetweenPoints + i)
+        //int x = 0;
+        for(int i = 0; i < filter.mesh.vertexCount; i += dstBetweenPoints)
         {
            Vector3 worldSpacePos = transform.TransformPoint(new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, mesh.vertices[i].z));
            bool isSpawnable = (worldSpacePos.y > spawnPointHieght);
-           spawnGrid[i] = new SpawnPointNode(isSpawnable, worldSpacePos);
+           spawnGrid[i / dstBetweenPoints] = new SpawnPointNode(isSpawnable, worldSpacePos);
         }
         //Debug.Log(mesh.vertexCount);
     }
@@ -94,7 +95,7 @@ public class SpawnPointsOnMesh : MonoBehaviour {
                     Gizmos.color = Color.green;
                 }
 
-                Gizmos.DrawSphere(n.worldPosition, 0.1f);
+                Gizmos.DrawSphere(n.worldPosition, 0.6f);
             }
         }
    }
