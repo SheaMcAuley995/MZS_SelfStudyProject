@@ -13,6 +13,8 @@ TagManager:
   - Enemy
   - Bullet
   - Factory
+  - Vehicle
+  - Factory Panel
   layers:
   - Default
   - TransparentFX
@@ -29,7 +31,7 @@ TagManager:
   - Building
   - Pickup
   - Item
-  - 
+  - Ground
   - 
   - 
   - 

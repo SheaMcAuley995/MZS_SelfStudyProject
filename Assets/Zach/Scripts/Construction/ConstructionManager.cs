@@ -8,7 +8,6 @@ public struct ConstructionData
 {
     [Header("Components and Dependencies")]
     public Animator animator;
-    public Inventory inventory;
     public ThirdPersonCamera cam;
     public Transform player;
     public Transform buildPos;
@@ -135,7 +134,7 @@ public class ConstructionManager : MonoBehaviour
 
         #region Resource Requirements
         //Turret Resource Requirement
-        if (data.inventory.numberOfScraps < data.costOfTurrets)
+        if (Inventory.instance.numberOfScraps < data.costOfTurrets)
         {
             data.buildingButtons[0].interactable = false;
             data.notEnoughScraps[0].SetActive(true);
@@ -147,7 +146,7 @@ public class ConstructionManager : MonoBehaviour
         }
 
         //Storage Resource Requirement
-        if (data.inventory.numberOfScraps < data.costOfStorage)
+        if (Inventory.instance.numberOfScraps < data.costOfStorage)
         {
             data.buildingButtons[1].interactable = false;
             data.notEnoughScraps[1].SetActive(true);
@@ -159,7 +158,7 @@ public class ConstructionManager : MonoBehaviour
         }
 
         //Factory Resource Requirement
-        if (data.inventory.numberOfScraps < data.costOfFactory)
+        if (Inventory.instance.numberOfScraps < data.costOfFactory)
         {
             data.buildingButtons[2].interactable = false;
             data.notEnoughScraps[2].SetActive(true);
@@ -221,7 +220,7 @@ public class ConstructionManager : MonoBehaviour
     // Spawns turret at set location
     void BuildTurret()
     {
-        data.inventory.numberOfScraps -= data.costOfTurrets;
+        Inventory.instance.numberOfScraps -= data.costOfTurrets;
 
         Destroy(data.buildingBlueprint);
         data.blueprinted = false;
@@ -233,7 +232,7 @@ public class ConstructionManager : MonoBehaviour
     // Spawns storage at set location
     void BuildStorage()
     {
-        data.inventory.numberOfScraps -= data.costOfStorage;
+        Inventory.instance.numberOfScraps -= data.costOfStorage;
 
         Destroy(data.buildingBlueprint);
         data.blueprinted = false;
@@ -245,7 +244,7 @@ public class ConstructionManager : MonoBehaviour
     // Spawns a factory at set location
     void BuildFactory()
     {
-        data.inventory.numberOfScraps -= data.costOfFactory;
+        Inventory.instance.numberOfScraps -= data.costOfFactory;
 
         Destroy(data.buildingBlueprint);
         data.blueprinted = false;
@@ -265,7 +264,6 @@ public class ConstructionManager : MonoBehaviour
     #region Start Functions
     void FindComponents()
     {
-        data.inventory = FindObjectOfType<Inventory>();
         data.cam = FindObjectOfType<ThirdPersonCamera>();
     }
 

@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1723678599356182}
   m_IsPrefabAsset: 1
+--- !u!1 &1530339841494588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4999256065383746}
+  m_Layer: 12
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1723678599356182
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,6 +37,7 @@ GameObject:
   - component: {fileID: 33313239627867744}
   - component: {fileID: 23163643555710332}
   - component: {fileID: 65934749913188632}
+  - component: {fileID: 114391364320423368}
   m_Layer: 12
   m_Name: TempFactory
   m_TagString: Factory
@@ -36,10 +52,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1723678599356182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 6.97}
+  m_LocalPosition: {x: 0.8468251, y: 1.5, z: 4.900345}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 4999256065383746}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4999256065383746
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1530339841494588}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.58, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4976698624019856}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23163643555710332
@@ -96,3 +126,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114391364320423368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723678599356182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa0401a68ee4534a9b012b6243095de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dronePrefab: {fileID: 1387488765456606, guid: f9b95eddd65ef684194440daa7eb7539,
+    type: 2}
+  roverPrefab: {fileID: 1554327967802176, guid: 7772e4de2e8cc084884d34380537dc9c,
+    type: 2}
+  robotSpawnPos: {fileID: 4999256065383746}
+  factoryPanel: {fileID: 0}
+  droneAmountText: {fileID: 0}
+  roverAmountText: {fileID: 0}
+  droneCompletionPercent: {fileID: 0}
+  roverCompletionPercent: {fileID: 0}
+  droneCompletionBar: {fileID: 0}
+  roverCompletionBar: {fileID: 0}
+  droneScrapsNeeded: 100
+  droneScrapsContributed: 0
+  roverScrapsNeeded: 300
+  roverScrapsContributed: 0
+  inspectingFactory: 0

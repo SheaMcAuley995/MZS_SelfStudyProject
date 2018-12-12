@@ -11,6 +11,7 @@ public class ItemSpawner : MonoBehaviour
     float radius;
     public Collider[] colliders;
     public LayerMask mask;
+    public Transform[] michaelsTransform;
 
     [Tooltip("Don't touch this, it's just visible here so that I can see how many there are in any particular session")]
     [SerializeField] int totalScraps;
@@ -67,6 +68,11 @@ public class ItemSpawner : MonoBehaviour
         }
 
         GameObject NewItem = Instantiate(itemList[0], spawnPos, Quaternion.identity, scrapsParent.transform);
+
+        foreach (var trans in michaelsTransform)
+        {
+            trans.position = NewItem.transform.position;
+        }
     }
 
     void SpawnEnemies()

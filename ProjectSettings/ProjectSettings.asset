@@ -4,7 +4,11 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 15
+<<<<<<< HEAD
   productGUID: b6352582bdecad647aa0f9f775b05e2c
+=======
+  productGUID: 1d6958e5f9b589743a33ca46e3d451ca
+>>>>>>> zach
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -125,6 +129,10 @@ PlayerSettings:
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
   xboxOneEnable7thCore: 1
+<<<<<<< HEAD
+=======
+  isWsaHolographicRemotingEnabled: 0
+>>>>>>> zach
   vrSettings:
     cardboard:
       depthFormat: 0
@@ -391,6 +399,7 @@ PlayerSettings:
   switchAllowsVideoCapturing: 1
   switchAllowsRuntimeAddOnContentInstall: 0
   switchDataLossConfirmation: 0
+  switchUserAccountLockEnabled: 0
   switchSupportedNpadStyles: 3
   switchNativeFsCacheSize: 32
   switchIsHoldTypeHorizontal: 0
