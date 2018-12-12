@@ -87,23 +87,27 @@ public class DroneCollection_AI : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {    
-        Drive();
-        Wander();
-        Fetch();
-        ReturnScraps();
-        //ApplySteering();
-        //ApplyBrakes();
-        CheckWaypoint();
-        //SlowOnApproach();
-        Sense();
-        dispNodes = nodes;
-        if (scrapsCollected == maxScraps)
-        {
-            scrapsFull = true;
-        }
-    }
+    {
 
+
+
+            Drive();
+            Wander();
+            Fetch();
+            ReturnScraps();
+            //ApplySteering();
+            //ApplyBrakes();
+            CheckWaypoint();
+            //SlowOnApproach();
+            Sense();
+            dispNodes = nodes;
+            if (scrapsCollected == maxScraps)
+            {
+                scrapsFull = true;
+            }
+            
+        
+    }
     private void ReturnScraps()
     {
         if (scrapsFull)
@@ -122,7 +126,7 @@ public class DroneCollection_AI : MonoBehaviour
 
     private void Sense()
     {
-        nodes = GetComponentInChildren<ConeDetector>().scraps;
+        //nodes = GetComponentInChildren<ConeDetector>().scraps;
         if (nodes.Count > 0)
         {
             foundScrap = true;
@@ -167,11 +171,11 @@ public class DroneCollection_AI : MonoBehaviour
             brakeLights.SetActive(false);
         }
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawLine(transform.position, nodes[currentNode].transform.position);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, nodes[currentNode].transform.position);
+    }
     private void ApplySteering()
     {
         Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
