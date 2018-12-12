@@ -102,11 +102,12 @@ public class DroneCollection_AI : MonoBehaviour
         nodes = GetComponentInChildren<ConeDetector>().scraps;
         if (nodes.Count > 0)
         {
+            foundScrap = true;
             if (nodes[currentNode].gameObject.activeSelf == false)
             {
                 nodes.Remove(nodes[currentNode]);
             }
-            foundScrap = true;
+            
         }
 
     }
@@ -209,7 +210,10 @@ public class DroneCollection_AI : MonoBehaviour
                 scrapsCollected++;
                 scrapCounter.text = scrapsCollected.ToString();
             }
-
+            if (nodes.Count == 0)
+            {
+                foundScrap = false;
+            }
         }
     }
     public void Wander()
