@@ -524,12 +524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eac88e6a994eba42be3100c3a6fb9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMotorBoost: 1.3
-  motorBoost: 1.1
-  maxMotorTorque: 10000
-  maxSpeed: 100
+  maxMotorBoost: 4
+  motorBoost: 2
+  maxMotorTorque: 10000000
+  maxSpeed: 400
   currentSpeed: 0
-  CenterOfMass: {x: 0, y: 0, z: 0}
+  CenterOfMass: {x: 0, y: -0.25, z: 0}
   isBreaking: 0
   brakeDistance: 30
   brakeLights: {fileID: 0}
@@ -1455,21 +1455,21 @@ WheelCollider:
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.45
   m_Mass: 20
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 0.0001
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_ExtremumSlip: 0.19
+    m_ExtremumValue: 1.25
+    m_AsymptoteSlip: 0.62
+    m_AsymptoteValue: 0.83
+    m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
+    m_ExtremumSlip: 0.001
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
+    m_AsymptoteSlip: 0.08
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.31
   m_Enabled: 1
 --- !u!146 &146944440362935272
 WheelCollider:
@@ -1484,15 +1484,15 @@ WheelCollider:
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 1.09
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.001
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
+    m_AsymptoteSlip: 0.001
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.22
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -1513,21 +1513,21 @@ WheelCollider:
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.45
   m_Mass: 20
-  m_WheelDampingRate: 0.25
+  m_WheelDampingRate: 0.0001
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_ExtremumSlip: 0.19
+    m_ExtremumValue: 1.25
+    m_AsymptoteSlip: 0.62
+    m_AsymptoteValue: 0.83
+    m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
+    m_ExtremumSlip: 0.001
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
+    m_AsymptoteSlip: 0.08
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.31
   m_Enabled: 1
 --- !u!146 &146989827446529768
 WheelCollider:
@@ -1542,15 +1542,15 @@ WheelCollider:
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 1.09
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.001
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
+    m_AsymptoteSlip: 0.001
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 1.22
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -1631,6 +1631,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.559027, y: 81.287926}
+  m_AnchoredPosition: {x: -17.4, y: 81.287926}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
