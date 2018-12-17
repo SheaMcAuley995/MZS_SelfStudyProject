@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83bde7902139c648a67a722b67b103c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sleep_Max: 100
-  food_Max: 100
+  sleep_Max: 200
+  food_Max: 75
   health_Max: 100
   speed_Max: 5
   foodType: 0
@@ -345,6 +345,12 @@ MonoBehaviour:
   statChangeSpeed: 1
   sleepTarget: {fileID: 353710729}
   eatTarget: {fileID: 548263330}
+  searchRadius: 10
+  searchForLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  updateNewPosition_Timer: 5
+  updateNewPosition_Radius: 25
 --- !u!195 &159466254
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -924,7 +930,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 482090547}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3e2ae27a3b34a24996e3337b35c4ead, type: 3}
   m_Name: 
@@ -2498,6 +2504,12 @@ MonoBehaviour:
   statChangeSpeed: 0.1
   sleepTarget: {fileID: 0}
   eatTarget: {fileID: 0}
+  searchRadius: 0
+  searchForLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  updateNewPosition_Timer: 10
+  updateNewPosition_Radius: 25
 --- !u!4 &2046661327
 Transform:
   m_ObjectHideFlags: 0

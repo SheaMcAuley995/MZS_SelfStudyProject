@@ -48,16 +48,27 @@ public class Ai_Behaviors : MonoBehaviour {
     private StatusType HealthStatus = StatusType.High;
 
     [SerializeField] float statChangeSpeed = 0.1f;
+
+    [Space][Header("Tarets")]
     GameObject curTarget;
     [SerializeField] GameObject sleepTarget;
     [SerializeField] GameObject eatTarget;
 
     bool sleeping = false;
     bool eating = false;
+    bool wondering = false;
     float priority_Food = 0;
     float priority_Sleep = 0;
-
+ 
     NavMeshAgent agent;
+
+    [Space][Header("Wander stats")]
+    bool updateNewPosition = true;
+    [SerializeField] float searchRadius;
+    [SerializeField] LayerMask searchForLayer;
+    [SerializeField] float updateNewPosition_Timer = 10;
+    [SerializeField] float updateNewPosition_Radius = 25;
+    float updatePositionTimer = 0;
 
     private void OnValidate()
     {
@@ -132,7 +143,7 @@ public class Ai_Behaviors : MonoBehaviour {
         cur_Sleep = Mathf.Clamp(cur_Sleep, 0, sleep_Max);
         //Debug.Log("Food :" + updateCurrentStatus_Food(cur_Food, food_Max, statusCurves_Food));
         //Debug.Log("Sleep :" + updateCurrentStatus_Food(cur_Sleep, sleep_Max, statusCurves_Sleep));
-        agent.SetDestination(curTarget.transform.position);
+        
 
     }
 
@@ -164,70 +175,86 @@ public class Ai_Behaviors : MonoBehaviour {
         switch (SleepStatus)
         {
             case StatusType.High:
-                priority_Sleep = evaluateStatus(cur_Sleep, sleep_Max) * 0.25f;
+                priority_Sleep = 1 - evaluateStatus(cur_Sleep, sleep_Max);
                 break;
             case StatusType.Med:
-                priority_Sleep = evaluateStatus(cur_Sleep, sleep_Max) * 0.5f;
+                priority_Sleep = 1 - evaluateStatus(cur_Sleep, sleep_Max);
                 break;
             case StatusType.Low:
-                priority_Sleep = evaluateStatus(cur_Sleep, sleep_Max) * 1;
+                priority_Sleep = 1 - evaluateStatus(cur_Sleep, sleep_Max);
                 break;
         }
 
         switch (foodStatus)
         {
             case StatusType.High:
-                priority_Food = evaluateStatus(cur_Food, food_Max) /4;
+                priority_Food = 1 - evaluateStatus(cur_Food, food_Max);
                 break;
             case StatusType.Med:
-                priority_Food = evaluateStatus(cur_Food, food_Max) /2;
+                priority_Food = 1 - evaluateStatus(cur_Food, food_Max);
                 break;
             case StatusType.Low:
-                priority_Food = evaluateStatus(cur_Food, food_Max) ;
+                priority_Food = 1 - evaluateStatus(cur_Food, food_Max);
                 break;
         }
-        // Debug.Log("Food Priority :" + priority_Food);
 
+        //priority_Sleep = Mathf.Clamp01(priority_Sleep);
+        //priority_Food = Mathf.Clamp01(priority_Food);
 
-        if (priority_Food >= priority_Sleep)
+        if (foodStatus == StatusType.High && SleepStatus == StatusType.High)
         {
-            if(sleeping)
+            if (!wondering)
             {
-                Debug.Log("I am Sleeping");
+                aiBehavior += Behavior_Wander;
+                wondering = true;
+            }
+            if (sleeping)
+            {
                 aiBehavior -= Behavior_Sleep;
                 sleeping = false;
             }
-            if(!eating)
+            if (eating)
             {
-                Debug.Log("I am Eating");
-                aiBehavior += Behavior_Eat;
-                eating = true;
+                aiBehavior -= Behavior_Eat;
+                eating = false;
             }
-
         }
-
-        if(priority_Sleep > priority_Food)
+        else if (priority_Sleep >= priority_Food)
         {
-            Debug.Log("This happens");
-            //Debug.Log("Sleep Prioirty :" + priority_Sleep);
+            if (wondering)
+            {
+                aiBehavior -= Behavior_Wander;
+                wondering = false;
+            }
             if (!sleeping)
             {
-                Debug.Log("I am Sleeping");
                 aiBehavior += Behavior_Sleep;
                 sleeping = true;
             }
             if (eating)
             {
-                Debug.Log("I am Eating");
                 aiBehavior -= Behavior_Eat;
                 eating = false;
             }
-
         }
-
-        priority_Sleep = Mathf.Clamp01(priority_Sleep);
-        priority_Food = Mathf.Clamp01(priority_Food);
-
+        else if (priority_Sleep < priority_Food)
+        {
+            if (wondering)
+            {
+                aiBehavior -= Behavior_Wander;
+                wondering = false;
+            }
+            if (sleeping)
+            {
+                aiBehavior -= Behavior_Sleep;
+                sleeping = false;
+            }
+            if (!eating)
+            {
+                aiBehavior += Behavior_Eat;
+                eating = true;
+            }
+        }
     }
 
     private float evaluateStatus(float currentStatus, float statusMax)
@@ -267,10 +294,60 @@ public class Ai_Behaviors : MonoBehaviour {
     public void Behavior_Eat()
     {
         curTarget = eatTarget;
+        agent.SetDestination(curTarget.transform.position);
     }
     public void Behavior_Sleep()
     {
         curTarget = sleepTarget;
+        agent.SetDestination(curTarget.transform.position);
+    }
+    public void Behavior_Wander()
+    {
+        Vector3 point;
+
+        if (updateNewPosition)
+        {
+            if (RandomPoint(transform.position, searchRadius, out point))
+            {
+                agent.SetDestination(point);
+                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
+                updatePositionTimer = agent.remainingDistance + updateNewPosition_Timer;
+                if (agent.remainingDistance != 0)
+                {
+
+                }
+                updateNewPosition = false;
+            }
+            else
+            {
+                updateNewPosition = true;
+            }
+        }
+        if (updatePositionTimer > 0)
+        {
+            updatePositionTimer -= Time.deltaTime;
+        }
+        else
+        {
+            updateNewPosition = true;
+        }
+        float speedPercent = agent.velocity.magnitude / agent.speed;
+               
+        //anim.SetFloat("speedPercent", speedPercent, .1f, Time.deltaTime);
+    }
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        Vector3 randomPoint = center + (Random.insideUnitSphere * range);
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
     }
 
     #endregion
